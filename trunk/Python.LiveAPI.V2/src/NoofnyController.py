@@ -73,12 +73,10 @@ class NoofnyController:
     _IGNORE_DISPLAY_CLIPS       = 0
     _IGNORE_DISPLAY_CHANNELS    = 0
     _IGNORE_DISPLAY_MUTES       = 0
-    _IGNORE_DISPLAY_SOLOS       = 0
     _IGNORE_DISPLAY_SYSTEM      = 0
 
     # Define global vars.
     _LAST_TRIGGERED_CLIPS       = [0,0,0,0,0,0,0,0]
-    _SOLO_STATES                = [0,0,0,0,0,0,0,0]
     _EQ_STATES                  = [0,0,0,0,0,0,0,0]
     _FX_STATES                  = [0,0,0,0,0,0,0,0]
     _MASTER_FX_STATE            = 0
@@ -87,7 +85,7 @@ class NoofnyController:
     _CLIP_COUNT_FX_C            = 0
     _CLIP_COUNT_FX_D            = 0
     _BUILD_MIDIMAP_COUNT        = 0
-
+    _DISCONNECTED               = 0
 
     _CLIP_LENGTHS = [[0,0]]
 
@@ -96,6 +94,7 @@ class NoofnyController:
 
     # Called once each time the class is instantiated from Live.
     def __init__(self, appInstance):
+        self._DISCONNECTED = 0;
         self.logger = Logger()
         if (self._LOG_CONNECT_EVENTS):
             self.logger.log("************ NoofnyController | CONNECTING ************")
@@ -113,8 +112,9 @@ class NoofnyController:
     def disconnect(self):
         if (self._LOG_DISCONNECT_EVENTS):
             self.logger.log("************ NoofnyController | DISCONNECTED ************")
-        #self.RemoveListeners()
+        self.RemoveListeners()
         self.send_midi(self._SYSEX_MESSAGE_DISCONNECT)
+        self._DISCONNECTED = 1;
 
         
 
@@ -130,16 +130,6 @@ class NoofnyController:
     def AddListeners(self):
         try:
             if (self._LOG_LISTENER_EVENTS):
-                self.logger.log("Adding Song Listeners...")
-            if not (self.song().is_playing_has_listener ):
-                self.song().add_is_playing_listener(self.Song_PlayingChanged)
-            if not (self.song().tempo_has_listener ):
-                self.song().add_tempo_listener(self.Song_TempoChanged)
-        except:
-            self.logger.log("    ERROR >>> Adding Song Listeners")
-
-        try:
-            if (self._LOG_LISTENER_EVENTS):
                 self.logger.log("Adding Master Level & Clip Listeners...")
             # create the output level listener for the master track.
             masterTrack = self.song().tracks[len(self.song().tracks)-1]
@@ -151,15 +141,12 @@ class NoofnyController:
         except:
             self.logger.log("    ERROR >>> Adding Master Level & Clip Listeners")
 
-        # create the solo listeners just for the 8 group tracks.
+        # create the listeners just for the 8 group tracks.
         for channelIndex in range(0, 8):
             try:
                 groupTrack = self.GetGroupTrack(channelIndex)
                 if (groupTrack == None):
                     continue    
-                trackSoloListener = self.CreateTrackSoloListener(groupTrack, channelIndex)
-                if not (groupTrack.solo_has_listener(trackSoloListener)):
-                    groupTrack.add_solo_listener(trackSoloListener)
                 self.AddGroupClipListeners(groupTrack, channelIndex)
             except:
                 self.logger.log("    ERROR >>> Adding Track Listeners channel=" + str(channel))
@@ -238,46 +225,34 @@ class NoofnyController:
 
         
 
-    # Here we strip off any resident event hooks.
+   # Here we tell Live which methods we want to execute when certain SONG/VIEW/TRACK events are fired.
     def RemoveListeners(self):
         try:
             if (self._LOG_LISTENER_EVENTS):
-                self.logger.log("Remove Song Listeners...")
-            if (self.song().is_playing_has_listener(self.Song_PlayingChanged)):
-                self.song().remove_is_playing_listener(self.Song_PlayingChanged)
-            if (self.song().tempo_has_listener(self.Song_TempoChanged)):
-                self.song().remove_tempo_listener(self.Song_TempoChanged)
-        except:
-            self.logger.log("    ERROR >>> Remove Song Listeners")
-
-        try:
-            if (self._LOG_LISTENER_EVENTS):
-                self.logger.log("Remove Master Level & Clip Listeners...")
-            # remove the output level listener for the master track.
+                self.logger.log("Removing Master Level & Clip Listeners...")
+            # create the output level listener for the master track.
             masterTrack = self.song().tracks[len(self.song().tracks)-1]
             masterLevelListener = self.CreateMasterLevelListener()
             if (masterTrack.output_meter_level_has_listener(masterLevelListener)):
                 masterTrack.remove_output_meter_level_listener(masterLevelListener)
-            # remove the clip listeners for the master track.
+            # create the clip listeners for the master track.
             self.RemoveMasterClipListeners(masterTrack)
         except:
             self.logger.log("    ERROR >>> Removing Master Level & Clip Listeners")
-        
-        # remove the solo listeners just for the 8 group tracks.
-        for channel in range(0, 8):
+
+        # create the listeners just for the 8 group tracks.
+        for channelIndex in range(0, 8):
             try:
-                groupTrack = self.GetGroupTrack(channel)
-                trackSoloListener = self.CreateTrackSoloListener(groupTrack, channel)
-                if (groupTrack.solo_has_listener(trackSoloListener)):
-                    groupTrack.remove_solo_listener(trackSoloListener)
-                self.RemoveGroupClipListeners(groupTrack, channel)
+                groupTrack = self.GetGroupTrack(channelIndex)
+                if (groupTrack == None):
+                    continue    
+                self.RemoveGroupClipListeners(groupTrack, channelIndex)
             except:
-                self.logger.log("    ERROR >>> Remove Track Listeners channel=" + str(channel))
+                self.logger.log("    ERROR >>> Removing Track Listeners channel=" + str(channel))
         
-        # now remove the clip listeners - only for clip tracks.
+        # now create the clip listeners - only for clip tracks.
         for track in self.song().tracks:
             try:
-                # now remove the clip listeners - only for clip tracks.
                 if (track.has_audio_output != 1):
                     continue    # so we skip midi tracks.
                 trackChannel = self.GetTrackChannel(track)
@@ -285,12 +260,14 @@ class NoofnyController:
                     continue    # so we skip non clip tracks.
                 self.RemoveClipListeners(track, trackChannel)
             except:
-                self.logger.log("    ERROR >>> Remove Track Listeners track=" + str(track.name))
+                self.logger.log("    ERROR >>> Removing Track Listeners track=" + str(track.name))
 
 
  
-    # Here we strip off any resident event hooks.
-    def RemoveClipListeners(self, track, trackChannel):
+ 
+
+    # Here we tell Live which methods we want to execute when certain CLIP events are fired.
+    def RemoveClipListeners(self, track, channelIndex):
         if (self._LOG_LISTENER_EVENTS):
             self.logger.log("RemoveClipListeners track=" + str(track.name))
         try:
@@ -302,48 +279,47 @@ class NoofnyController:
                 if not (clipSlot.has_clip):
                     continue
                 clip = clipSlot.clip
-                clipTriggeredListener = self.CreateClipTriggeredListener(clip, clipSlotIndex, clipIndex, track, trackChannel)
-                if (clip.is_triggered_has_listener(clipTriggeredListener)):
-                    clip.remove_is_triggered_listener(clipTriggeredListener)
-                clipPlayingListener = self.CreateClipPlayingListener(clip, clipSlotIndex, clipIndex, track, trackChannel)
-                if (clip.is_playing_has_listener(clipPlayingListener )):
-                    clip.remove_is_playing_listener(clipPlayingListener)
+                clipTriggeredListener = self.CreateClipTriggeredListener(clip, clipSlotIndex, clipIndex, track, channelIndex)
+                if (clipSlot.is_triggered_has_listener(clipTriggeredListener)):
+                    clipSlot.remove_is_triggered_listener(clipTriggeredListener)
+                clipPlayingListener = self.CreateClipPlayingListener(clip, clipSlotIndex, clipIndex, track, channelIndex)
+                if (clip.playing_status_has_listener(clipPlayingListener )):
+                    clip.remove_playing_status_listener(clipPlayingListener)
         except:
             self.logger.log("    ERROR >>> RemoveClipListeners track=" + str(track.name))
 
 
-    # Here we strip off any resident event hooks.
-    def RemoveGroupClipListeners(self, track, trackChannel):
+    # Here we tell Live which methods we want to execute when certain CLIP events are fired.
+    def RemoveGroupClipListeners(self, track, channelIndex):
         if (self._LOG_LISTENER_EVENTS):
             self.logger.log("RemoveGroupClipListeners track=" + str(track.name))
         try:
-            for clipSlotIndex in range(0, self._MAX_NUMBER_OF_GROUP_TRACK_CLIPS):
+            for clipSlotIndex in range(0, self._MAX_NUMBER_OF_GROUP_TRACK_CLIPS):  
                 clipSlot = track.clip_slots[clipSlotIndex]
                 if (clipSlot == None):
                     continue
                 if not (clipSlot.has_clip):
                     continue
-                clipPlayingListener = self.CreateGroupClipPlayingListener(clipSlot.clip, clipSlotIndex, track, trackChannel)
-                if (clipSlot.clip.is_playing_has_listener(clipPlayingListener )):
-                    clipSlot.clip.remove_is_playing_listener(clipPlayingListener)
+                clipPlayingListener = self.CreateGroupClipPlayingListener(clipSlot.clip, clipSlotIndex, track, channelIndex)
+                if (clipSlot.clip.playing_status_has_listener(clipPlayingListener)):
+                    clipSlot.clip.remove_playing_status_listener(clipPlayingListener)
         except:
             self.logger.log("    ERROR >>> RemoveGroupClipListeners track=" + str(track.name))
 
-
-    # Here we strip off any resident event hooks.
+    # Here we tell Live which methods we want to execute when certain CLIP events are fired.
     def RemoveMasterClipListeners(self, track):
         if (self._LOG_LISTENER_EVENTS):
             self.logger.log("RemoveMasterClipListeners track=" + str(track.name))
         try:
-            for clipSlotIndex in range(0, self._MAX_NUMBER_OF_GROUP_TRACK_CLIPS):
+            for clipSlotIndex in range(0, self._MAX_NUMBER_OF_GROUP_TRACK_CLIPS):  
                 clipSlot = track.clip_slots[clipSlotIndex]
                 if (clipSlot == None):
                     continue
                 if not (clipSlot.has_clip):
                     continue
                 clipPlayingListener = self.CreateMasterClipPlayingListener(clipSlot.clip, clipSlotIndex, track)
-                if (clipSlot.clip.is_playing_has_listener(clipPlayingListener )):
-                    clipSlot.clip.remove_is_playing_listener(clipPlayingListener)
+                if (clipSlot.clip.playing_status_has_listener(clipPlayingListener)):
+                    clipSlot.clip.remove_playing_status_listener(clipPlayingListener)
         except:
             self.logger.log("    ERROR >>> RemoveMasterClipListeners track=" + str(track.name))
 
@@ -359,14 +335,6 @@ class NoofnyController:
 
 
 
-    def Song_PlayingChanged(self):
-        if (self._LOG_LISTENER_EVENTS):
-            self.logger.log("Song_PlayingChanged PLAYING=" + str(self.song().is_playing))
-
-    def Song_TempoChanged(self):
-        if (self._LOG_LISTENER_EVENTS):
-            self.logger.log("Song_TempoChanged TEMPO=" + str(self.song().tempo))
- 
 
 
         
@@ -392,14 +360,7 @@ class NoofnyController:
         return MasterLevelChanged;
 
 
-    def CreateTrackSoloListener(self, track, channelIndex):
-        def TrackSoloChanged():
-            if (self._LOG_LISTENER_EVENTS):
-                self.logger.log("----------------TrackSoloChanged : track=" + str(track.name) + " channelIndex=" + str(channelIndex))
-            self._SOLO_STATES[channelIndex] = track.solo
-            self.DisplayChannelSolos()
-        return TrackSoloChanged;
-
+ 
     
     def CreateClipTriggeredListener(self, clip, clipSlotIndex, clipIndex, track, channelIndex):
         def ClipTriggered():
@@ -608,7 +569,6 @@ class NoofnyController:
                 else:
                     self.GatherSongState()
                     self.SetCurrentSong(self._CURRENT_SONG)
-                    self.DisplayChannelSolos()
                     self.DisplayChannelButtons()
                     self.ResetEffectClips()
                     self.ResetMasterClips()
@@ -630,6 +590,8 @@ class NoofnyController:
     # LiveAPI event.
     # Used to send the given MIDI message to the assigned MIDI out port in the remote control settings.
     def send_midi(self, midi_event_bytes):
+        if (self._DISCONNECTED):
+            return
         if (self._LOG_MIDI_OUT_EVENTS):
             self.logger.log("send_midi > " + str(midi_event_bytes))
         try:
@@ -840,7 +802,7 @@ class NoofnyController:
             
                 
 
-    # CHANNEL buttons are the 3 channel strip buttons and solo buttons.
+    # CHANNEL buttons are the 3 channel strip buttons.
     def HandleChannelButton(self, channelIndex, buttonIndex, buttonState):
         if (self._LOG_HANDLER_EVENTS):
             self.logger.log("HandleChannelButton > channelIndex=" + str(channelIndex) + " buttonIndex=" + str(buttonIndex)  + " buttonState=" + str(buttonState))
@@ -866,9 +828,36 @@ class NoofnyController:
                         self._FX_STATES[channelIndex] = 1
                         groupTrack.clip_slots[2].fire()
 
+                # LFO 2 I/O
+                elif (buttonIndex == 0):
+                    lfoDev2 = groupTrack.devices[0]
+                    currentLfoValue = lfoDev2.parameters[8].value;
+                    self.logger.log("---------> track=" + str(groupTrack.name) + " currentLfoValue=" + str(currentLfoValue))
+                    if (currentLfoValue >= 0 and currentLfoValue < 42):
+                        lfoDev2.parameters[8].value = 42
+                    elif (currentLfoValue >= 42 or currentLfoValue < 85):
+                        lfoDev2.parameters[8].value = 85
+                    else:
+                        lfoDev2.parameters[8].value = 0
+                        
+#                    for deviceParam in groupTrack.devices[0].parameters:
+#                        self.logger.log("---------> track=" + str(groupTrack.name) + " deviceParam=" + str(deviceParam.name))
+                        
+#                    lfo2 = self.GetDeviceByName(groupTrack, "Auto Filter")
+#                    if (lfo2 != None):
+#                        self.logger.log("---------> " + str(lfo2.name))
+#                    else:
+#                        self.logger.log("---------> [null]")
+#                    self.ToggleDeviceParameter(device, paramName)
+#                    groupTrack = self.GetGroupTrack(channelIndex)
+
+                # LFO 1 I/O
+                elif (buttonIndex == 1):    
+                    lfo1 = self.GetDeviceByName(groupTrack, "Auto Pan")
+
                 # EQ ON/OFF
-                elif (buttonIndex == 0):    
-                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 2, self._LED_WHITE))
+                elif (buttonIndex == 2):    
+                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_WHITE))
                     if (self._EQ_STATES[channelIndex] == 1 and self._FX_STATES[channelIndex] == 1):
                         self._EQ_STATES[channelIndex] = 0
                         groupTrack.clip_slots[2].fire()
@@ -1114,7 +1103,7 @@ class NoofnyController:
 
 
 
-    # Send status of the 3 channel strip buttons and solo buttons. 
+    # Send status of the 3 channel strip buttons. 
     def DisplayChannelButtons(self):
         if (self._LOG_DISPLAY_EVENTS):
             self.logger.log(">>> DisplayChannelButtons")
@@ -1132,6 +1121,8 @@ class NoofnyController:
 
     def DisplayChannelButtonsForChannel(self, channelIndex):
         try:
+            if (self._DISCONNECTED):
+                return
             groupTrack = self.GetGroupTrack(channelIndex)
             if (groupTrack.clip_slots[0].clip.is_playing == False
                 and groupTrack.clip_slots[1].clip.is_playing == False
@@ -1145,46 +1136,22 @@ class NoofnyController:
                 None
             else:
                 if (self._EQ_STATES[channelIndex] == 1 and self._FX_STATES[channelIndex] == 1):   
-                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 2, self._LED_YELLOW))
+                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_YELLOW))
                     self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 11, self._LED_MAGENTA))
                 elif (self._EQ_STATES[channelIndex] == 1 and self._FX_STATES[channelIndex] == 0):   
-                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 2, self._LED_YELLOW))
+                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_YELLOW))
                     self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 11, self._LED_OFF))
                 elif (self._EQ_STATES[channelIndex] == 0 and self._FX_STATES[channelIndex] == 1):   
-                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 2, self._LED_OFF))
+                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_OFF))
                     self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 11, self._LED_MAGENTA))
                 else:
-                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 2, self._LED_OFF))
+                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_OFF))
                     self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 11, self._LED_OFF))
         except:
             self.logger.log("    ERROR >>> DisplayChannelButtonsForChannel ERROR!!! channelIndex=" + str(channelIndex))
         
 
-    def DisplayChannelSolos(self):
-        if (self._LOG_DISPLAY_EVENTS):
-            self.logger.log(">>> DisplayChannelSolos")
-        if (self._IGNORE_DISPLAY_SOLOS == 1):
-            return
-        try:
-            self._IGNORE_DISPLAY_SOLOS = 1
-            numberOfSolos = 0
-            for channelIndex in range (0, 8):
-                if (self._SOLO_STATES[channelIndex] == 1):
-                    numberOfSolos+=1
-            if (numberOfSolos == 0):
-                for channelIndex in range (0, 8):
-                    self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_GREEN))
-            else:
-                for channelIndex in range (0, 8):
-                    if (self._SOLO_STATES[channelIndex] == 1):
-                        self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_RED))
-                    else:
-                        self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_OFF))
-            self._IGNORE_DISPLAY_SOLOS = 0
-        except:
-            self._IGNORE_DISPLAY_SOLOS = 0
-            self.logger.log("    ERROR >>> DisplayChannelSolos ERROR!!!")
-            
+  
 
 
 
@@ -1315,7 +1282,6 @@ class NoofnyController:
                 groupTrack = self.GetGroupTrack(channel)
                 if (groupTrack == None):
                     continue
-                self._SOLO_STATES[channel] = groupTrack.solo
                 if (groupTrack.clip_slots[3].clip.is_playing or groupTrack.clip_slots[3].clip.is_triggered):
                     self._EQ_STATES[channel] = 1
                     self._FX_STATES[channel] = 1
@@ -1402,15 +1368,17 @@ class NoofnyController:
             return None
 
     # Util that gets the device on the given track by the given name.
-    def GetDeviceByName(self, trackIndex, deviceName):
+    def GetDeviceByName(self, track, deviceName):
         try:
-            for device in self.song().tracks[trackIndex].devices:
+            for device in track.devices:
                 if (device.name == deviceName):
                     return device
             return None
         except:
-            self.logger.log("    ERROR >>> GetDeviceByName trackIndex=" + str(trackIndex) + " deviceName=" + str(deviceName))
+            self.logger.log("    ERROR >>> GetDeviceByName track=" + str(track.Name) + " deviceName=" + str(deviceName))
             return None
+
+
 
     # Util that gets the value of the given device in the given track by the given parameter name. 
     def GetDeviceParameter(self, device, paramName):
@@ -1528,16 +1496,20 @@ class NoofnyController:
     def GetGroupTrack(self, channelIndex):
         try:
             for track in self.song().tracks:
-                if not (track.has_audio_output):
-                    continue    # so we only get audio tracks
-                if (len(str(track.current_input_routing)) < 1):
-                    continue    # so we skip return tracks
-                groupTrackName = track.name
-                if (len(groupTrackName) > 2):   # all group tracks are named as their channel index ('1' to '8')
-                    continue    # so we skip any other audio tracks that aren't group tracks
-                groupTrackNumber = int(groupTrackName[0])-1    # channelIndex is zero-based
-                if (groupTrackNumber == channelIndex):   
-                    return track
+                try:
+                    if not (track.has_audio_output):
+                        continue    # so we only get audio tracks
+                    if (len(str(track.current_input_routing)) < 1):
+                        continue    # so we skip return tracks
+                    groupTrackName = track.name
+                    if (len(groupTrackName) > 2):   # all group tracks are named as their channel index ('1' to '8')
+                        continue    # so we skip any other audio tracks that aren't group tracks
+                    groupTrackNumber = int(groupTrackName[0])-1    # channelIndex is zero-based
+                    if (groupTrackNumber == channelIndex):   
+                        return track
+                except:
+                    self.logger.log("    ERROR >>> GetGroupTrack > channelIndex=" + str(channelIndex) + " track=" + str(track.name))
+                    return None
             return None
         except:
             self.logger.log("    ERROR >>> GetGroupTrack > channelIndex=" + str(channelIndex))
