@@ -828,34 +828,22 @@ class NoofnyController:
                         self._FX_STATES[channelIndex] = 1
                         groupTrack.clip_slots[2].fire()
 
-                # LFO 2 I/O
-                elif (buttonIndex == 0):
-                    lfoDev2 = groupTrack.devices[0]
-                    currentLfoValue = lfoDev2.parameters[8].value;
-                    self.logger.log("---------> track=" + str(groupTrack.name) + " currentLfoValue=" + str(currentLfoValue))
-                    if (currentLfoValue >= 0 and currentLfoValue < 42):
-                        lfoDev2.parameters[8].value = 42
-                    elif (currentLfoValue >= 42 or currentLfoValue < 85):
-                        lfoDev2.parameters[8].value = 85
-                    else:
-                        lfoDev2.parameters[8].value = 0
-                        
-#                    for deviceParam in groupTrack.devices[0].parameters:
-#                        self.logger.log("---------> track=" + str(groupTrack.name) + " deviceParam=" + str(deviceParam.name))
-                        
-#                    lfo2 = self.GetDeviceByName(groupTrack, "Auto Filter")
-#                    if (lfo2 != None):
-#                        self.logger.log("---------> " + str(lfo2.name))
-#                    else:
-#                        self.logger.log("---------> [null]")
-#                    self.ToggleDeviceParameter(device, paramName)
-#                    groupTrack = self.GetGroupTrack(channelIndex)
-
-                # LFO 1 I/O
+#                # LOOP I/O
+#                elif (buttonIndex == 0):
+#                    None
+#
+                # LFO 0/1/2
                 elif (buttonIndex == 1):    
-                    lfo1 = self.GetDeviceByName(groupTrack, "Auto Pan")
+                    currentLfoValue = groupTrack.devices[0].parameters[8].value;
+                    if (currentLfoValue == 0 and currentLfoValue < 42):
+                        groupTrack.devices[0].parameters[8].value = 42
+                    elif (currentLfoValue >= 42 and currentLfoValue < 85):
+                        groupTrack.devices[0].parameters[8].value = 85
+                    else:
+                        groupTrack.devices[0].parameters[8].value = 0
+                    self.DisplayChannelButtonsForChannel(channelIndex)
 
-                # EQ ON/OFF
+                # EQ I/O
                 elif (buttonIndex == 2):    
                     self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_WHITE))
                     if (self._EQ_STATES[channelIndex] == 1 and self._FX_STATES[channelIndex] == 1):
@@ -1147,6 +1135,15 @@ class NoofnyController:
                 else:
                     self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 0, self._LED_OFF))
                     self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 11, self._LED_OFF))
+
+            currentLfoValue = groupTrack.devices[0].parameters[8].value;
+            if (currentLfoValue == 0 and currentLfoValue < 42):
+                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 1, self._LED_OFF))
+            elif (currentLfoValue >= 42 and currentLfoValue < 85):
+                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 1, self._LED_BLUE))
+            else:
+                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 1, self._LED_CYAN))
+
         except:
             self.logger.log("    ERROR >>> DisplayChannelButtonsForChannel ERROR!!! channelIndex=" + str(channelIndex))
         
