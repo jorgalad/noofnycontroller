@@ -533,6 +533,7 @@ class NoofnyController:
         lsb = int & 0x7F
         return (msb,lsb)
 
+
     # LiveAPI event.
     # Called each time Live decides it's time to re-map all the internal MIDI stuff.
     # Example - when you add or remove tracks, devices, or change your set around, etc.
@@ -540,21 +541,9 @@ class NoofnyController:
         if (self._LOG_BUILD_MIDI_MAP):
             self.logger.log(">>> build_midi_map")
         try:
-#            self._CLIP_LENGTHS = [[0,0]]
-#            for track in self.song().tracks:
-#                #self.logger.log("----------> build_midi_map  track=" + str(track.name) + " channelIndex=" + str(channelIndex) + " clip=" + str(clipSlot.clip.name))
-#                if (track.has_midi_input):
-#                    continue
-#                channelIndex = self.GetTrackChannel_New(track)
-#                if (channelIndex == None):
-#                    continue
-#                self.logger.log("----------> build_midi_map  track=" + str(track.name))
-#                for clipSlot in track.clip_slots:
-#                    if not (clip_slot.has_clip):
-#                        continue
-                    #self._CLIP_LENGTHS.append([id(clip_slot.clip), clip_slot.clip.length])
                     
             self._appInstance.show_message(">>> build_midi_map # " + str(self._BUILD_MIDIMAP_COUNT))
+            self.GatherClipLengths()
             map_mode = Live.MidiMap.MapMode.absolute
             for channel in range(0,16):
                 for cc in range(127):
@@ -684,11 +673,22 @@ class NoofnyController:
                 # MISC - Y (these are handled internally depending on the changel / instrument)
                 elif (controllerIndex == self._CC_CHANNEL_Y):
                     if (channelIndex >= 0 and channelIndex <= 3):
-                        clip = self.song().tracks[4].clip_slots[0].clip
-                        endValueRaw = (float(potValue) / float(127)) * 16
-                        endValue = round(endValueRaw, 1)
-                        clip.loop_end  = endValue
-
+#                        clip = self.song().tracks[4].clip_slots[0].clip
+#                        endValueRaw = (float(potValue) / float(127)) * 16
+#                        endValue = round(endValueRaw, 1)
+#                        clip.loop_end  = endValue
+                        playingClips = self.GetPlayingClipsForChannel(channelIndex)
+                        if (playingClips != None):
+                            #self.logger.log("---------------->  playingClips=" + str(playingClips))
+                            for playingClip in playingClips:
+                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name))
+                                shit = self._CLIP_LENGTHS[str(id(playingClip))]
+                                #self.logger.log("---------------->  playingClip")
+                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name))
+                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " self._CLIP_LENGTHS=" + str(len(self._CLIP_LENGTHS)))
+                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " self._CLIP_LENGTHS=" + str(len(self._CLIP_LENGTHS)))
+                                self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " shit=" + str(shit))
+                            
                 # MESC - X (these are handled internally depending on the changel / instrument)
                 elif (controllerIndex == self._CC_CHANNEL_X):
                     if (channelIndex >= 0 and channelIndex <= 3):
@@ -1339,6 +1339,28 @@ class NoofnyController:
             self.logger.log("    ERROR >>> ResetMasterClips")
 
 
+    def GatherClipLengths(self):
+        try:
+            self._CLIP_LENGTHS = [[0,0]]
+            for track in self.song().tracks:
+                if (track.has_midi_input):
+                    continue
+                channelIndex = self.GetTrackChannel(track)
+                if (channelIndex == None):
+                    continue
+                for clipSlot in track.clip_slots:
+                    if not (clipSlot.has_clip):
+                        continue
+                    try:
+                        #self.logger.log("------------------> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name) + " looping=" + str(clipSlot.clip.looping)) 
+                        isLooping = clipSlot.clip.looping
+                        clipSlot.clip.looping = False
+                        self._CLIP_LENGTHS.append( [str(id(clipSlot.clip)), clipSlot.clip.length] )
+                        clipSlot.clip.looping = isLooping
+                    except:
+                        self.logger.log("    ERROR >>> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name)) 
+        except:
+            self.logger.log("    ERROR >>> GatherClipLengths")
 
 
 
