@@ -1,0 +1,1215 @@
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00001 ;--------------------------------------------------------
+               00002 ; File Created by SDCC : free open source ANSI-C Compiler
+               00003 ; Version 2.8.0 #5117 (Mar 23 2008) (MINGW32)
+               00004 ; This file was generated Sun Nov 22 19:11:42 2009
+               00005 ;--------------------------------------------------------
+               00006 ; PIC16 port for the Microchip 16-bit core micros
+               00007 ;--------------------------------------------------------
+               00008         list    p=18f452
+               00009 
+               00010         radix dec
+               00011 
+               00012 ;--------------------------------------------------------
+               00013 ; public variables in this module
+               00014 ;--------------------------------------------------------
+               00015         global _app_flags
+               00016         global _last_ain_pin
+               00017         global _last_din_pin
+               00018         global _last_dout_pin
+               00019         global _Init
+               00020         global _Tick
+               00021         global _Timer
+               00022         global _DISPLAY_Init
+               00023         global _DISPLAY_Tick
+               00024         global _MPROC_NotifyReceivedEvnt
+               00025         global _MPROC_NotifyFoundEvent
+               00026         global _MPROC_NotifyTimeout
+               00027         global _MPROC_NotifyReceivedByte
+               00028         global _SR_Service_Prepare
+               00029         global _SR_Service_Finish
+               00030         global _DIN_NotifyToggle
+               00031         global _ENC_NotifyChange
+               00032         global _AIN_NotifyChange
+               00033         global _pot_event_map
+               00034         global _button_event_map
+               00035 
+               00036 ;--------------------------------------------------------
+               00037 ; extern variables in this module
+               00038 ;--------------------------------------------------------
+               00039         extern _MIOS_BOX_CFG0
+               00040         extern _MIOS_BOX_CFG1
+               00041         extern _MIOS_BOX_STAT
+               00042         extern _MIOS_PARAMETER1
+               00043         extern _MIOS_PARAMETER2
+               00044         extern _MIOS_PARAMETER3
+               00045         extern _PORTAbits
+               00046         extern _PORTBbits
+               00047         extern _PORTCbits
+               00048         extern _PORTDbits
+               00049         extern _PORTEbits
+               00050         extern _LATAbits
+               00051         extern _LATBbits
+               00052         extern _LATCbits
+               00053         extern _LATDbits
+               00054         extern _LATEbits
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00055         extern _TRISAbits
+               00056         extern _TRISBbits
+               00057         extern _TRISCbits
+               00058         extern _TRISDbits
+               00059         extern _TRISEbits
+               00060         extern _PIE1bits
+               00061         extern _PIR1bits
+               00062         extern _IPR1bits
+               00063         extern _PIE2bits
+               00064         extern _PIR2bits
+               00065         extern _IPR2bits
+               00066         extern _EECON1bits
+               00067         extern _RCSTAbits
+               00068         extern _TXSTAbits
+               00069         extern _T3CONbits
+               00070         extern _CCP2CONbits
+               00071         extern _CCP1CONbits
+               00072         extern _ADCON1bits
+               00073         extern _ADCON0bits
+               00074         extern _SSPCON2bits
+               00075         extern _SSPCON1bits
+               00076         extern _SSPSTATbits
+               00077         extern _T2CONbits
+               00078         extern _T1CONbits
+               00079         extern _RCONbits
+               00080         extern _WDTCONbits
+               00081         extern _LVDCONbits
+               00082         extern _OSCCONbits
+               00083         extern _T0CONbits
+               00084         extern _STATUSbits
+               00085         extern _INTCON3bits
+               00086         extern _INTCON2bits
+               00087         extern _INTCONbits
+               00088         extern _STKPTRbits
+               00089         extern _PORTA
+               00090         extern _PORTB
+               00091         extern _PORTC
+               00092         extern _PORTD
+               00093         extern _PORTE
+               00094         extern _LATA
+               00095         extern _LATB
+               00096         extern _LATC
+               00097         extern _LATD
+               00098         extern _LATE
+               00099         extern _TRISA
+               00100         extern _TRISB
+               00101         extern _TRISC
+               00102         extern _TRISD
+               00103         extern _TRISE
+               00104         extern _PIE1
+               00105         extern _PIR1
+               00106         extern _IPR1
+               00107         extern _PIE2
+               00108         extern _PIR2
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00109         extern _IPR2
+               00110         extern _EECON1
+               00111         extern _EECON2
+               00112         extern _EEDATA
+               00113         extern _EEADR
+               00114         extern _RCSTA
+               00115         extern _TXSTA
+               00116         extern _TXREG
+               00117         extern _RCREG
+               00118         extern _SPBRG
+               00119         extern _T3CON
+               00120         extern _TMR3L
+               00121         extern _TMR3H
+               00122         extern _CCP2CON
+               00123         extern _CCPR2L
+               00124         extern _CCPR2H
+               00125         extern _CCP1CON
+               00126         extern _CCPR1L
+               00127         extern _CCPR1H
+               00128         extern _ADCON1
+               00129         extern _ADCON0
+               00130         extern _ADRESL
+               00131         extern _ADRESH
+               00132         extern _SSPCON2
+               00133         extern _SSPCON1
+               00134         extern _SSPSTAT
+               00135         extern _SSPADD
+               00136         extern _SSPBUF
+               00137         extern _T2CON
+               00138         extern _PR2
+               00139         extern _TMR2
+               00140         extern _T1CON
+               00141         extern _TMR1L
+               00142         extern _TMR1H
+               00143         extern _RCON
+               00144         extern _WDTCON
+               00145         extern _LVDCON
+               00146         extern _OSCCON
+               00147         extern _T0CON
+               00148         extern _TMR0L
+               00149         extern _TMR0H
+               00150         extern _STATUS
+               00151         extern _FSR2L
+               00152         extern _FSR2H
+               00153         extern _PLUSW2
+               00154         extern _PREINC2
+               00155         extern _POSTDEC2
+               00156         extern _POSTINC2
+               00157         extern _INDF2
+               00158         extern _BSR
+               00159         extern _FSR1L
+               00160         extern _FSR1H
+               00161         extern _PLUSW1
+               00162         extern _PREINC1
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00163         extern _POSTDEC1
+               00164         extern _POSTINC1
+               00165         extern _INDF1
+               00166         extern _WREG
+               00167         extern _FSR0L
+               00168         extern _FSR0H
+               00169         extern _PLUSW0
+               00170         extern _PREINC0
+               00171         extern _POSTDEC0
+               00172         extern _POSTINC0
+               00173         extern _INDF0
+               00174         extern _INTCON3
+               00175         extern _INTCON2
+               00176         extern _INTCON
+               00177         extern _PRODL
+               00178         extern _PRODH
+               00179         extern _TABLAT
+               00180         extern _TBLPTRL
+               00181         extern _TBLPTRH
+               00182         extern _TBLPTRU
+               00183         extern _PCL
+               00184         extern _PCLATH
+               00185         extern _PCLATU
+               00186         extern _STKPTR
+               00187         extern _TOSL
+               00188         extern _TOSH
+               00189         extern _TOSU
+               00190         extern _MIOS_MIDI_BeginStream
+               00191         extern _MIOS_MIDI_EndStream
+               00192         extern _MIOS_MIDI_MergerSet
+               00193         extern _MIOS_MIDI_TxBufferPut
+               00194         extern _MIOS_AIN_DeadbandSet
+               00195         extern _MIOS_AIN_Muxed
+               00196         extern _MIOS_AIN_NumberSet
+               00197         extern _MIOS_AIN_Pin7bitGet
+               00198         extern _MIOS_DIN_PinGet
+               00199         extern _MIOS_DOUT_PinGet
+               00200         extern _MIOS_DOUT_PinSet
+               00201         extern _MIOS_SRIO_NumberSet
+               00202         extern _MIOS_SRIO_TS_SensitivitySet
+               00203         extern _MIOS_SRIO_UpdateFrqSet
+               00204         extern _MIOS_SRIO_DebounceSet
+               00205         extern _MIOS_LCD_Clear
+               00206         extern _MIOS_LCD_CursorSet
+               00207         extern _MIOS_LCD_PrintBCD2
+               00208         extern _MIOS_LCD_PrintBCD3
+               00209         extern _MIOS_LCD_PrintChar
+               00210         extern _MIOS_LCD_PrintCString
+               00211         extern _mios_enc_pin_table
+               00212         extern _mios_mproc_event_table
+               00213         extern _MIOS_MPROC_EVENT_TABLE
+               00214         extern _MIOS_ENC_PIN_TABLE
+               00215 ;--------------------------------------------------------
+               00216 ;       Equates to used internal registers
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00217 ;--------------------------------------------------------
+  00000FD8     00218 STATUS  equ     0xfd8
+  00000FF6     00219 TBLPTRL equ     0xff6
+  00000FF7     00220 TBLPTRH equ     0xff7
+  00000FF8     00221 TBLPTRU equ     0xff8
+  00000FF5     00222 TABLAT  equ     0xff5
+  00000FE1     00223 FSR0L equ 0xfe1 ;; normaly 0xfe9, changed by mios-gpasm
+  00000FE2     00224 FSR0H equ 0xfe2 ;; normaly 0xfea, changed by mios-gpasm
+  00000FE9     00225 FSR1L equ 0xfe9 ;; normaly 0xfe1, changed by mios-gpasm
+  00000FD9     00226 FSR2L   equ     0xfd9
+  00000FE7     00227 INDF0 equ 0xfe7 ;; normaly 0xfef, changed by mios-gpasm
+  00000FE6     00228 POSTINC0 equ 0xfe6 ;; normaly 0xfee, changed by mios-gpasm
+  00000FED     00229 POSTDEC1 equ 0xfed ;; normaly 0xfe5, changed by mios-gpasm
+  00000FEC     00230 PREINC1 equ 0xfec ;; normaly 0xfe4, changed by mios-gpasm
+  00000FDB     00231 PLUSW2  equ     0xfdb
+               00232 
+               00233 
+               00234         idata
+               00235 _clipButtons    db      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+               00236         db      0x00, 0x00, 0x00, 0x00
+               00237 
+               00238 
+               00239 ; Internal registers
+               00240 .registers udata_ovr 0x0010 ;; normaly 0x0000, changed by mios-gpasm
+               00241 r0x00   res     1
+               00242 r0x01   res     1
+               00243 r0x02   res     1
+               00244 r0x03   res     1
+               00245 r0x04   res     1
+               00246 r0x05   res     1
+               00247 r0x06   res     1
+               00248 r0x07   res     1
+               00249 
+               00250 udata_main_0    udata
+               00251 _app_flags      res     1
+               00252 
+               00253 udata_main_1    udata
+               00254 _last_ain_pin   res     1
+               00255 
+               00256 udata_main_2    udata
+               00257 _last_din_pin   res     1
+               00258 
+               00259 udata_main_3    udata
+               00260 _last_dout_pin  res     1
+               00261 
+               00262 ;--------------------------------------------------------
+               00263 ; global & static initialisations
+               00264 ;--------------------------------------------------------
+               00265 ; I code from now on!
+               00266 ; ; Starting pCode block
+               00267 S_main__AIN_NotifyChange        code
+0000           00268 _AIN_NotifyChange:
+               00269 ;       .line   338; main.c     void AIN_NotifyChange(unsigned char pin, unsigned int pin_value) __wparam
+0000 CFD9 FFED 00270         MOVFF   FSR2L, POSTDEC1
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0004 CFE9 FFD9 00271         MOVFF   FSR1L, FSR2L
+0008 C000 FFED 00272         MOVFF   r0x00, POSTDEC1
+000C C000 FFED 00273         MOVFF   r0x01, POSTDEC1
+0010 C000 FFED 00274         MOVFF   r0x02, POSTDEC1
+0014 C000 FFED 00275         MOVFF   r0x03, POSTDEC1
+0018 C000 FFED 00276         MOVFF   r0x04, POSTDEC1
+001C 6E00      00277         MOVWF   r0x00
+               00278 ;       .line   347; main.c     MIOS_MIDI_BeginStream();
+001E EC00 F000 00279         CALL    _MIOS_MIDI_BeginStream
+               00280 ; ;multiply lit val:0x02 by variable r0x00 and store in r0x01
+               00281 ; ;Unrolled 8 X 8 multiplication
+               00282 ; ;FIXME: the function does not support result==WREG
+               00283 ;       .line   348; main.c     MIOS_MIDI_TxBufferPut(pot_event_map[pin][0]); // first value from table
+0022 90D8      00284         BCF     STATUS, 0
+0024 3400      00285         RLCF    r0x00, W
+0026 6E00      00286         MOVWF   r0x01
+0028 0E00      00287         MOVLW   LOW(_pot_event_map)
+002A 2400      00288         ADDWF   r0x01, W
+002C 6E00      00289         MOVWF   r0x02
+002E 6A00      00290         CLRF    r0x03
+0030 0E00      00291         MOVLW   HIGH(_pot_event_map)
+0032 2200      00292         ADDWFC  r0x03, F
+0034 6A00      00293         CLRF    r0x04
+0036 0E00      00294         MOVLW   UPPER(_pot_event_map)
+0038 2200      00295         ADDWFC  r0x04, F
+003A C000 FFF6 00296         MOVFF   r0x02, TBLPTRL
+003E C000 FFF7 00297         MOVFF   r0x03, TBLPTRH
+0042 C000 FFF8 00298         MOVFF   r0x04, TBLPTRU
+0046 0009      00299         TBLRD*+ 
+0048 CFF5 F000 00300         MOVFF   TABLAT, r0x02
+004C 5000      00301         MOVF    r0x02, W
+004E EC00 F000 00302         CALL    _MIOS_MIDI_TxBufferPut
+               00303 ;       .line   349; main.c     MIOS_MIDI_TxBufferPut(pot_event_map[pin][1]); // second value from table
+0052 6A00      00304         CLRF    r0x02
+0054 6A00      00305         CLRF    r0x03
+0056 0E00      00306         MOVLW   LOW(_pot_event_map)
+0058 2600      00307         ADDWF   r0x01, F
+005A 0E00      00308         MOVLW   HIGH(_pot_event_map)
+005C 2200      00309         ADDWFC  r0x02, F
+005E 0E00      00310         MOVLW   UPPER(_pot_event_map)
+0060 2200      00311         ADDWFC  r0x03, F
+0062 2A00      00312         INCF    r0x01, F
+0064 B0D8      00313         BTFSC   STATUS, 0
+0066 2A00      00314         INCF    r0x02, F
+0068 B0D8      00315         BTFSC   STATUS, 0
+006A 2A00      00316         INCF    r0x03, F
+006C C000 FFF6 00317         MOVFF   r0x01, TBLPTRL
+0070 C000 FFF7 00318         MOVFF   r0x02, TBLPTRH
+0074 C000 FFF8 00319         MOVFF   r0x03, TBLPTRU
+0078 0009      00320         TBLRD*+ 
+007A CFF5 F000 00321         MOVFF   TABLAT, r0x01
+007E 5000      00322         MOVF    r0x01, W
+0080 EC00 F000 00323         CALL    _MIOS_MIDI_TxBufferPut
+               00324 ;       .line   350; main.c     MIOS_MIDI_TxBufferPut(MIOS_AIN_Pin7bitGet(pin)); // 7bit pot value
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0084 5000      00325         MOVF    r0x00, W
+0086 EC00 F000 00326         CALL    _MIOS_AIN_Pin7bitGet
+008A 6E00      00327         MOVWF   r0x01
+008C 5000      00328         MOVF    r0x01, W
+008E EC00 F000 00329         CALL    _MIOS_MIDI_TxBufferPut
+               00330 ;       .line   351; main.c     MIOS_MIDI_EndStream();
+0092 EC00 F000 00331         CALL    _MIOS_MIDI_EndStream
+               00332 ;       .line   354; main.c     last_ain_pin = pin;
+0096 C000 F000 00333         MOVFF   r0x00, _last_ain_pin
+009A 0000      00334         BANKSEL _app_flags
+               00335 ;       .line   355; main.c     app_flags.DISPLAY_UPDATE_REQ = 1;
+009C 8100      00336         BSF     _app_flags, 0, B
+009E CFEC F000 00337         MOVFF   PREINC1, r0x04
+00A2 CFEC F000 00338         MOVFF   PREINC1, r0x03
+00A6 CFEC F000 00339         MOVFF   PREINC1, r0x02
+00AA CFEC F000 00340         MOVFF   PREINC1, r0x01
+00AE CFEC F000 00341         MOVFF   PREINC1, r0x00
+00B2 CFEC FFD9 00342         MOVFF   PREINC1, FSR2L
+00B6 0012      00343         RETURN  
+               00344 
+               00345 ; ; Starting pCode block
+               00346 S_main__ENC_NotifyChange        code
+0000           00347 _ENC_NotifyChange:
+               00348 ;       .line   331; main.c     void ENC_NotifyChange(unsigned char encoder, char incrementer) __wparam
+0000 CFD9 FFED 00349         MOVFF   FSR2L, POSTDEC1
+0004 CFE9 FFD9 00350         MOVFF   FSR1L, FSR2L
+               00351 ;       .line   333; main.c     }
+0008 CFEC FFD9 00352         MOVFF   PREINC1, FSR2L
+000C 0012      00353         RETURN  
+               00354 
+               00355 ; ; Starting pCode block
+               00356 S_main__DIN_NotifyToggle        code
+0000           00357 _DIN_NotifyToggle:
+               00358 ;       .line   286; main.c     void DIN_NotifyToggle(unsigned char pin, unsigned char pin_value) __wparam
+0000 CFD9 FFED 00359         MOVFF   FSR2L, POSTDEC1
+0004 CFE9 FFD9 00360         MOVFF   FSR1L, FSR2L
+0008 C000 FFED 00361         MOVFF   r0x00, POSTDEC1
+000C C000 FFED 00362         MOVFF   r0x01, POSTDEC1
+0010 C000 FFED 00363         MOVFF   r0x02, POSTDEC1
+0014 C000 FFED 00364         MOVFF   r0x03, POSTDEC1
+0018 C000 FFED 00365         MOVFF   r0x04, POSTDEC1
+001C C000 FFED 00366         MOVFF   r0x05, POSTDEC1
+0020 C000 FFED 00367         MOVFF   r0x06, POSTDEC1
+0024 C000 FFED 00368         MOVFF   r0x07, POSTDEC1
+0028 6E00      00369         MOVWF   r0x00
+002A 0E02      00370         MOVLW   0x02
+002C CFDB F000 00371         MOVFF   PLUSW2, r0x01
+               00372 ; ;multiply lit val:0x02 by variable r0x00 and store in r0x02
+               00373 ; ;Unrolled 8 X 8 multiplication
+               00374 ; ;FIXME: the function does not support result==WREG
+               00375 ;       .line   297; main.c     channel = button_event_map[pin][0];
+0030 90D8      00376         BCF     STATUS, 0
+0032 3400      00377         RLCF    r0x00, W
+0034 6E00      00378         MOVWF   r0x02
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0036 6A00      00379         CLRF    r0x03
+0038 6A00      00380         CLRF    r0x04
+003A 0E00      00381         MOVLW   LOW(_button_event_map)
+003C 2600      00382         ADDWF   r0x02, F
+003E 0E00      00383         MOVLW   HIGH(_button_event_map)
+0040 2200      00384         ADDWFC  r0x03, F
+0042 0E00      00385         MOVLW   UPPER(_button_event_map)
+0044 2200      00386         ADDWFC  r0x04, F
+0046 C000 FFF6 00387         MOVFF   r0x02, TBLPTRL
+004A C000 FFF7 00388         MOVFF   r0x03, TBLPTRH
+004E C000 FFF8 00389         MOVFF   r0x04, TBLPTRU
+0052 0009      00390         TBLRD*+ 
+0054 CFF5 F000 00391         MOVFF   TABLAT, r0x05
+               00392 ;       .line   298; main.c     note = button_event_map[pin][1];
+0058 2A00      00393         INCF    r0x02, F
+005A B0D8      00394         BTFSC   STATUS, 0
+005C 2A00      00395         INCF    r0x03, F
+005E B0D8      00396         BTFSC   STATUS, 0
+0060 2A00      00397         INCF    r0x04, F
+0062 C000 FFF6 00398         MOVFF   r0x02, TBLPTRL
+0066 C000 FFF7 00399         MOVFF   r0x03, TBLPTRH
+006A C000 FFF8 00400         MOVFF   r0x04, TBLPTRU
+006E 0009      00401         TBLRD*+ 
+0070 CFF5 F000 00402         MOVFF   TABLAT, r0x02
+               00403 ;       .line   301; main.c     if (pin_value == 0)
+0074 5000      00404         MOVF    r0x01, W
+0076 E100      00405         BNZ     _00176_DS_
+               00406 ; ;multiply lit val:0x02 by variable r0x05 and store in r0x03
+               00407 ; ;Unrolled 8 X 8 multiplication
+               00408 ; ;FIXME: the function does not support result==WREG
+               00409 ;       .line   303; main.c     if (clipButtons[channel] != 0)
+0078 90D8      00410         BCF     STATUS, 0
+007A 3400      00411         RLCF    r0x05, W
+007C 6E00      00412         MOVWF   r0x03
+007E 6A00      00413         CLRF    r0x04
+0080 0E00      00414         MOVLW   LOW(_clipButtons)
+0082 2600      00415         ADDWF   r0x03, F
+0084 0E00      00416         MOVLW   HIGH(_clipButtons)
+0086 2200      00417         ADDWFC  r0x04, F
+0088 C000 FFE1 00418         MOVFF   r0x03, FSR0L
+008C C000 FFE2 00419         MOVFF   r0x04, FSR0H
+0090 CFE6 F000 00420         MOVFF   POSTINC0, r0x06
+0094 CFE7 F000 00421         MOVFF   INDF0, r0x07
+0098 5000      00422         MOVF    r0x06, W
+009A 1000      00423         IORWF   r0x07, W
+               00424 ;       .line   305; main.c     return;
+009C E100      00425         BNZ     _00178_DS_
+               00426 ;       .line   307; main.c     clipButtons[channel] = 1;
+009E C000 FFE1 00427         MOVFF   r0x03, FSR0L
+00A2 C000 FFE2 00428         MOVFF   r0x04, FSR0H
+00A6 0E01      00429         MOVLW   0x01
+00A8 6EE6      00430         MOVWF   POSTINC0
+00AA 0E00      00431         MOVLW   0x00
+00AC 6EE7      00432         MOVWF   INDF0
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+00AE D000      00433         BRA     _00177_DS_
+               00434 ; ;multiply lit val:0x02 by variable r0x05 and store in r0x03
+               00435 ; ;Unrolled 8 X 8 multiplication
+               00436 ; ;FIXME: the function does not support result==WREG
+00B0           00437 _00176_DS_:
+               00438 ;       .line   311; main.c     clipButtons[channel] = 0;
+00B0 90D8      00439         BCF     STATUS, 0
+00B2 3400      00440         RLCF    r0x05, W
+00B4 6E00      00441         MOVWF   r0x03
+00B6 6A00      00442         CLRF    r0x04
+00B8 0E00      00443         MOVLW   LOW(_clipButtons)
+00BA 2600      00444         ADDWF   r0x03, F
+00BC 0E00      00445         MOVLW   HIGH(_clipButtons)
+00BE 2200      00446         ADDWFC  r0x04, F
+00C0 C000 FFE1 00447         MOVFF   r0x03, FSR0L
+00C4 C000 FFE2 00448         MOVFF   r0x04, FSR0H
+00C8 0E00      00449         MOVLW   0x00
+00CA 6EE6      00450         MOVWF   POSTINC0
+00CC 0E00      00451         MOVLW   0x00
+00CE 6EE7      00452         MOVWF   INDF0
+00D0           00453 _00177_DS_:
+               00454 ;       .line   315; main.c     MIOS_MIDI_BeginStream();
+00D0 EC00 F000 00455         CALL    _MIOS_MIDI_BeginStream
+               00456 ;       .line   316; main.c     MIOS_MIDI_TxBufferPut(channel); // first value from table
+00D4 5000      00457         MOVF    r0x05, W
+00D6 EC00 F000 00458         CALL    _MIOS_MIDI_TxBufferPut
+               00459 ;       .line   317; main.c     MIOS_MIDI_TxBufferPut(note); // second value from table
+00DA 5000      00460         MOVF    r0x02, W
+00DC EC00 F000 00461         CALL    _MIOS_MIDI_TxBufferPut
+               00462 ;       .line   318; main.c     MIOS_MIDI_TxBufferPut(pin_value ? 0x00 : 0x7f); // 7bit pot value
+00E0 5000      00463         MOVF    r0x01, W
+00E2 E000      00464         BZ      _00180_DS_
+00E4 6A00      00465         CLRF    r0x01
+00E6 D000      00466         BRA     _00181_DS_
+00E8           00467 _00180_DS_:
+00E8 0E7F      00468         MOVLW   0x7f
+00EA 6E00      00469         MOVWF   r0x01
+00EC           00470 _00181_DS_:
+00EC 5000      00471         MOVF    r0x01, W
+00EE EC00 F000 00472         CALL    _MIOS_MIDI_TxBufferPut
+               00473 ;       .line   319; main.c     MIOS_MIDI_EndStream();
+00F2 EC00 F000 00474         CALL    _MIOS_MIDI_EndStream
+               00475 ;       .line   322; main.c     last_din_pin = pin;
+00F6 C000 F000 00476         MOVFF   r0x00, _last_din_pin
+00FA 0000      00477         BANKSEL _app_flags
+               00478 ;       .line   323; main.c     app_flags.DISPLAY_UPDATE_REQ = 1;
+00FC 8100      00479         BSF     _app_flags, 0, B
+00FE           00480 _00178_DS_:
+00FE CFEC F000 00481         MOVFF   PREINC1, r0x07
+0102 CFEC F000 00482         MOVFF   PREINC1, r0x06
+0106 CFEC F000 00483         MOVFF   PREINC1, r0x05
+010A CFEC F000 00484         MOVFF   PREINC1, r0x04
+010E CFEC F000 00485         MOVFF   PREINC1, r0x03
+0112 CFEC F000 00486         MOVFF   PREINC1, r0x02
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0116 CFEC F000 00487         MOVFF   PREINC1, r0x01
+011A CFEC F000 00488         MOVFF   PREINC1, r0x00
+011E CFEC FFD9 00489         MOVFF   PREINC1, FSR2L
+0122 0012      00490         RETURN  
+               00491 
+               00492 ; ; Starting pCode block
+               00493 S_main__SR_Service_Finish       code
+0000           00494 _SR_Service_Finish:
+               00495 ;       .line   280; main.c     }
+0000 0012      00496         RETURN  
+               00497 
+               00498 ; ; Starting pCode block
+               00499 S_main__SR_Service_Prepare      code
+0000           00500 _SR_Service_Prepare:
+               00501 ;       .line   273; main.c     }
+0000 0012      00502         RETURN  
+               00503 
+               00504 ; ; Starting pCode block
+               00505 S_main__MPROC_NotifyReceivedByte        code
+0000           00506 _MPROC_NotifyReceivedByte:
+               00507 ;       .line   264; main.c     void MPROC_NotifyReceivedByte(unsigned char byte) __wparam
+0000 CFD9 FFED 00508         MOVFF   FSR2L, POSTDEC1
+0004 CFE9 FFD9 00509         MOVFF   FSR1L, FSR2L
+               00510 ;       .line   266; main.c     }
+0008 CFEC FFD9 00511         MOVFF   PREINC1, FSR2L
+000C 0012      00512         RETURN  
+               00513 
+               00514 ; ; Starting pCode block
+               00515 S_main__MPROC_NotifyTimeout     code
+0000           00516 _MPROC_NotifyTimeout:
+               00517 ;       .line   259; main.c     }
+0000 0012      00518         RETURN  
+               00519 
+               00520 ; ; Starting pCode block
+               00521 S_main__MPROC_NotifyFoundEvent  code
+0000           00522 _MPROC_NotifyFoundEvent:
+               00523 ;       .line   249; main.c     void MPROC_NotifyFoundEvent(unsigned entry, unsigned char evnt0, unsigned char evnt1, unsigned char evnt2) __wparam
+0000 CFD9 FFED 00524         MOVFF   FSR2L, POSTDEC1
+0004 CFE9 FFD9 00525         MOVFF   FSR1L, FSR2L
+               00526 ;       .line   251; main.c     }
+0008 CFEC FFD9 00527         MOVFF   PREINC1, FSR2L
+000C 0012      00528         RETURN  
+               00529 
+               00530 ; ; Starting pCode block
+               00531 S_main__MPROC_NotifyReceivedEvnt        code
+0000           00532 _MPROC_NotifyReceivedEvnt:
+               00533 ;       .line   228; main.c     void MPROC_NotifyReceivedEvnt(unsigned char evnt0, unsigned char evnt1, unsigned char evnt2) __wparam
+0000 CFD9 FFED 00534         MOVFF   FSR2L, POSTDEC1
+0004 CFE9 FFD9 00535         MOVFF   FSR1L, FSR2L
+0008 C000 FFED 00536         MOVFF   r0x00, POSTDEC1
+000C C000 FFED 00537         MOVFF   r0x01, POSTDEC1
+0010 C000 FFED 00538         MOVFF   r0x02, POSTDEC1
+0014 C000 FFED 00539         MOVFF   r0x03, POSTDEC1
+0018 6E00      00540         MOVWF   r0x00
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+001A 0E02      00541         MOVLW   0x02
+001C CFDB F000 00542         MOVFF   PLUSW2, r0x01
+0020 0E03      00543         MOVLW   0x03
+0022 CFDB F000 00544         MOVFF   PLUSW2, r0x02
+               00545 ;       .line   231; main.c     if( evnt0 == 0x80 || evnt0 == 0x90 ) {
+0026 6A00      00546         CLRF    r0x03
+0028 5000      00547         MOVF    r0x00, W
+002A 0A80      00548         XORLW   0x80
+002C E100      00549         BNZ     _00146_DS_
+002E 2A00      00550         INCF    r0x03, F
+0030           00551 _00146_DS_:
+0030 5000      00552         MOVF    r0x03, W
+0032 E100      00553         BNZ     _00135_DS_
+0034 5000      00554         MOVF    r0x00, W
+0036 0A90      00555         XORLW   0x90
+0038 E100      00556         BNZ     _00138_DS_
+003A           00557 _00135_DS_:
+               00558 ;       .line   233; main.c     if( evnt0 == 0x80 )
+003A 5000      00559         MOVF    r0x03, W
+003C E000      00560         BZ      _00134_DS_
+               00561 ;       .line   234; main.c     evnt2 = 0;
+003E 6A00      00562         CLRF    r0x02
+0040           00563 _00134_DS_:
+               00564 ;       .line   237; main.c     MIOS_DOUT_PinSet(evnt1, evnt2 ? 0x01 : 0x00);
+0040 5000      00565         MOVF    r0x02, W
+0042 E000      00566         BZ      _00140_DS_
+0044 0E01      00567         MOVLW   0x01
+0046 6E00      00568         MOVWF   r0x00
+0048 D000      00569         BRA     _00141_DS_
+004A           00570 _00140_DS_:
+004A 6A00      00571         CLRF    r0x00
+004C           00572 _00141_DS_:
+004C 5000      00573         MOVF    r0x00, W
+004E 6EED      00574         MOVWF   POSTDEC1
+0050 5000      00575         MOVF    r0x01, W
+0052 EC00 F000 00576         CALL    _MIOS_DOUT_PinSet
+0056 2AE9      00577         INCF    FSR1L, F
+               00578 ;       .line   240; main.c     last_dout_pin = evnt1;
+0058 C000 F000 00579         MOVFF   r0x01, _last_dout_pin
+005C 0000      00580         BANKSEL _app_flags
+               00581 ;       .line   241; main.c     app_flags.DISPLAY_UPDATE_REQ = 1;
+005E 8100      00582         BSF     _app_flags, 0, B
+0060           00583 _00138_DS_:
+0060 CFEC F000 00584         MOVFF   PREINC1, r0x03
+0064 CFEC F000 00585         MOVFF   PREINC1, r0x02
+0068 CFEC F000 00586         MOVFF   PREINC1, r0x01
+006C CFEC F000 00587         MOVFF   PREINC1, r0x00
+0070 CFEC FFD9 00588         MOVFF   PREINC1, FSR2L
+0074 0012      00589         RETURN  
+               00590 
+               00591 ; ; Starting pCode block
+               00592 S_main__DISPLAY_Tick    code
+0000           00593 _DISPLAY_Tick:
+               00594 ;       .line   199; main.c     void DISPLAY_Tick(void) __wparam
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0000 C000 FFED 00595         MOVFF   r0x00, POSTDEC1
+0004 0000      00596         BANKSEL _app_flags
+               00597 ;       .line   202; main.c     if( !app_flags.DISPLAY_UPDATE_REQ )
+0006 B100      00598         BTFSC   _app_flags, 0, B
+0008 D000      00599         BRA     _00122_DS_
+               00600 ;       .line   203; main.c     return;
+000A D000      00601         BRA     _00123_DS_
+000C           00602 _00122_DS_:
+000C 0000      00603         BANKSEL _app_flags
+               00604 ;       .line   206; main.c     app_flags.DISPLAY_UPDATE_REQ = 0;
+000E 9100      00605         BCF     _app_flags, 0, B
+               00606 ;       .line   209; main.c     MIOS_LCD_CursorSet(0x40 + 0);
+0010 0E40      00607         MOVLW   0x40
+0012 EC00 F000 00608         CALL    _MIOS_LCD_CursorSet
+0016 0000      00609         BANKSEL _last_ain_pin
+               00610 ;       .line   210; main.c     MIOS_LCD_PrintBCD2(last_ain_pin + 1);
+0018 2900      00611         INCF    _last_ain_pin, W, B
+001A 6E00      00612         MOVWF   r0x00
+001C 5000      00613         MOVF    r0x00, W
+001E EC00 F000 00614         CALL    _MIOS_LCD_PrintBCD2
+               00615 ;       .line   211; main.c     MIOS_LCD_PrintChar(':');
+0022 0E3A      00616         MOVLW   0x3a
+0024 EC00 F000 00617         CALL    _MIOS_LCD_PrintChar
+0028 0000      00618         BANKSEL _last_ain_pin
+               00619 ;       .line   212; main.c     MIOS_LCD_PrintBCD3(MIOS_AIN_Pin7bitGet(last_ain_pin));
+002A 5100      00620         MOVF    _last_ain_pin, W, B
+002C EC00 F000 00621         CALL    _MIOS_AIN_Pin7bitGet
+0030 6E00      00622         MOVWF   r0x00
+0032 5000      00623         MOVF    r0x00, W
+0034 EC00 F000 00624         CALL    _MIOS_LCD_PrintBCD3
+               00625 ;       .line   215; main.c     MIOS_LCD_CursorSet(0x40 + 7);
+0038 0E47      00626         MOVLW   0x47
+003A EC00 F000 00627         CALL    _MIOS_LCD_CursorSet
+003E 0000      00628         BANKSEL _last_din_pin
+               00629 ;       .line   216; main.c     MIOS_LCD_PrintBCD3(last_din_pin + 1);
+0040 2900      00630         INCF    _last_din_pin, W, B
+0042 6E00      00631         MOVWF   r0x00
+0044 5000      00632         MOVF    r0x00, W
+0046 EC00 F000 00633         CALL    _MIOS_LCD_PrintBCD3
+004A 0000      00634         BANKSEL _last_din_pin
+               00635 ;       .line   217; main.c     MIOS_LCD_PrintChar(MIOS_DIN_PinGet(last_din_pin) ? 'o' : '*');
+004C 5100      00636         MOVF    _last_din_pin, W, B
+004E EC00 F000 00637         CALL    _MIOS_DIN_PinGet
+0052 6E00      00638         MOVWF   r0x00
+0054 5000      00639         MOVF    r0x00, W
+0056 E000      00640         BZ      _00125_DS_
+0058 0E6F      00641         MOVLW   0x6f
+005A 6E00      00642         MOVWF   r0x00
+005C D000      00643         BRA     _00126_DS_
+005E           00644 _00125_DS_:
+005E 0E2A      00645         MOVLW   0x2a
+0060 6E00      00646         MOVWF   r0x00
+0062           00647 _00126_DS_:
+0062 5000      00648         MOVF    r0x00, W
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0064 EC00 F000 00649         CALL    _MIOS_LCD_PrintChar
+               00650 ;       .line   220; main.c     MIOS_LCD_CursorSet(0x40 + 12);
+0068 0E4C      00651         MOVLW   0x4c
+006A EC00 F000 00652         CALL    _MIOS_LCD_CursorSet
+006E 0000      00653         BANKSEL _last_dout_pin
+               00654 ;       .line   221; main.c     MIOS_LCD_PrintBCD3(last_dout_pin + 1);
+0070 2900      00655         INCF    _last_dout_pin, W, B
+0072 6E00      00656         MOVWF   r0x00
+0074 5000      00657         MOVF    r0x00, W
+0076 EC00 F000 00658         CALL    _MIOS_LCD_PrintBCD3
+007A 0000      00659         BANKSEL _last_dout_pin
+               00660 ;       .line   222; main.c     MIOS_LCD_PrintChar(MIOS_DOUT_PinGet(last_dout_pin) ? '*' : 'o');
+007C 5100      00661         MOVF    _last_dout_pin, W, B
+007E EC00 F000 00662         CALL    _MIOS_DOUT_PinGet
+0082 6E00      00663         MOVWF   r0x00
+0084 5000      00664         MOVF    r0x00, W
+0086 E000      00665         BZ      _00127_DS_
+0088 0E2A      00666         MOVLW   0x2a
+008A 6E00      00667         MOVWF   r0x00
+008C D000      00668         BRA     _00128_DS_
+008E           00669 _00127_DS_:
+008E 0E6F      00670         MOVLW   0x6f
+0090 6E00      00671         MOVWF   r0x00
+0092           00672 _00128_DS_:
+0092 5000      00673         MOVF    r0x00, W
+0094 EC00 F000 00674         CALL    _MIOS_LCD_PrintChar
+0098           00675 _00123_DS_:
+0098 CFEC F000 00676         MOVFF   PREINC1, r0x00
+009C 0012      00677         RETURN  
+               00678 
+               00679 ; ; Starting pCode block
+               00680 S_main__DISPLAY_Init    code
+0000           00681 _DISPLAY_Init:
+               00682 ;       .line   183; main.c     MIOS_LCD_Clear();
+0000 EC00 F000 00683         CALL    _MIOS_LCD_Clear
+               00684 ;       .line   186; main.c     MIOS_LCD_CursorSet(0x00); // first line
+0004 0E00      00685         MOVLW   0x00
+0006 EC00 F000 00686         CALL    _MIOS_LCD_CursorSet
+               00687 ;       .line   187; main.c     MIOS_LCD_PrintCString("1AIN   DIN  DOUT");
+000A 0E00      00688         MOVLW   UPPER(__str_0)
+000C 6EED      00689         MOVWF   POSTDEC1
+000E 0E00      00690         MOVLW   HIGH(__str_0)
+0010 6EED      00691         MOVWF   POSTDEC1
+0012 0E00      00692         MOVLW   LOW(__str_0)
+0014 EC00 F000 00693         CALL    _MIOS_LCD_PrintCString
+0018 0E02      00694         MOVLW   0x02
+001A 26E9      00695         ADDWF   FSR1L, F
+               00696 ;       .line   188; main.c     MIOS_LCD_CursorSet(0x40); // second line
+001C 0E40      00697         MOVLW   0x40
+001E EC00 F000 00698         CALL    _MIOS_LCD_CursorSet
+               00699 ;       .line   189; main.c     MIOS_LCD_PrintCString("xx:xxx xxxx xxxx");
+0022 0E00      00700         MOVLW   UPPER(__str_1)
+0024 6EED      00701         MOVWF   POSTDEC1
+0026 0E00      00702         MOVLW   HIGH(__str_1)
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0028 6EED      00703         MOVWF   POSTDEC1
+002A 0E00      00704         MOVLW   LOW(__str_1)
+002C EC00 F000 00705         CALL    _MIOS_LCD_PrintCString
+0030 0E02      00706         MOVLW   0x02
+0032 26E9      00707         ADDWF   FSR1L, F
+0034 0000      00708         BANKSEL _app_flags
+               00709 ;       .line   192; main.c     app_flags.DISPLAY_UPDATE_REQ = 1;
+0036 8100      00710         BSF     _app_flags, 0, B
+0038 0012      00711         RETURN  
+               00712 
+               00713 ; ; Starting pCode block
+               00714 S_main__Timer   code
+0000           00715 _Timer:
+               00716 ;       .line   173; main.c     }
+0000 0012      00717         RETURN  
+               00718 
+               00719 ; ; Starting pCode block
+               00720 S_main__Tick    code
+0000           00721 _Tick:
+               00722 ;       .line   165; main.c     }
+0000 0012      00723         RETURN  
+               00724 
+               00725 ; ; Starting pCode block
+               00726 S_main__Init    code
+0000           00727 _Init:
+               00728 ;       .line   137; main.c     MIOS_MIDI_MergerSet(MIOS_MIDI_MERGER_MBLINK_FP);
+0000 0E03      00729         MOVLW   0x03
+0002 EC00 F000 00730         CALL    _MIOS_MIDI_MergerSet
+               00731 ;       .line   140; main.c     MIOS_SRIO_UpdateFrqSet(1); // ms
+0006 0E01      00732         MOVLW   0x01
+0008 EC00 F000 00733         CALL    _MIOS_SRIO_UpdateFrqSet
+               00734 ;       .line   143; main.c     MIOS_SRIO_NumberSet(NUMBER_OF_SRIO);
+000C 0E10      00735         MOVLW   0x10
+000E EC00 F000 00736         CALL    _MIOS_SRIO_NumberSet
+               00737 ;       .line   146; main.c     MIOS_SRIO_DebounceSet(DIN_DEBOUNCE_VALUE);
+0012 0E0A      00738         MOVLW   0x0a
+0014 EC00 F000 00739         CALL    _MIOS_SRIO_DebounceSet
+               00740 ;       .line   148; main.c     MIOS_SRIO_TS_SensitivitySet(DIN_TS_SENSITIVITY);
+0018 0E00      00741         MOVLW   0x00
+001A EC00 F000 00742         CALL    _MIOS_SRIO_TS_SensitivitySet
+               00743 ;       .line   151; main.c     MIOS_AIN_NumberSet(AIN_NUMBER_INPUTS);
+001E 0E40      00744         MOVLW   0x40
+0020 EC00 F000 00745         CALL    _MIOS_AIN_NumberSet
+               00746 ;       .line   153; main.c     MIOS_AIN_Muxed();
+0024 EC00 F000 00747         CALL    _MIOS_AIN_Muxed
+               00748 ;       .line   157; main.c     MIOS_AIN_DeadbandSet(AIN_DEADBAND);
+0028 0E07      00749         MOVLW   0x07
+002A EC00 F000 00750         CALL    _MIOS_AIN_DeadbandSet
+002E 0012      00751         RETURN  
+               00752 
+               00753 ; ; Starting pCode block for Ival
+               00754         code
+0000           00755 _pot_event_map:
+0000 07B0 07B1 00756         DB      0xb0, 0x07, 0xb1, 0x07, 0xb2, 0x07, 0xb3, 0x07, 0xb4, 0x07, 0xb5, 0x07
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0004 07B2 07B3
+0008 07B4 07B5
+000C 07B6 07B7 00757         DB      0xb6, 0x07, 0xb7, 0x07, 0xbc, 0x32, 0xbc, 0x33, 0xbc, 0x34, 0xbc, 0x35
+0010 32BC 33BC
+0014 34BC 35BC
+0018 32B9 33B9 00758         DB      0xb9, 0x32, 0xb9, 0x33, 0xb9, 0x34, 0xb9, 0x35, 0xb8, 0x32, 0xb8, 0x33
+001C 34B9 35B9
+0020 32B8 33B8
+0024 32BB 33BB 00759         DB      0xbb, 0x32, 0xbb, 0x33, 0xbb, 0x34, 0xbb, 0x35, 0xb8, 0x36, 0xb8, 0x37
+0028 34BB 35BB
+002C 36B8 37B8
+0030 34B8 35B8 00760         DB      0xb8, 0x34, 0xb8, 0x35, 0xba, 0x32, 0xba, 0x33, 0xba, 0x34, 0xba, 0x35
+0034 32BA 33BA
+0038 34BA 35BA
+003C 38B8 39B8 00761         DB      0xb8, 0x38, 0xb8, 0x39, 0xb0, 0x1f, 0xb1, 0x1f, 0xb2, 0x1f, 0xb3, 0x1f
+0040 1FB0 1FB1
+0044 1FB2 1FB3
+0048 1FB4 1FB5 00762         DB      0xb4, 0x1f, 0xb5, 0x1f, 0xb6, 0x1f, 0xb7, 0x1f, 0xb0, 0x1e, 0xb1, 0x1e
+004C 1FB6 1FB7
+0050 1EB0 1EB1
+0054 1EB2 1EB3 00763         DB      0xb2, 0x1e, 0xb3, 0x1e, 0xb4, 0x1e, 0xb5, 0x1e, 0xb6, 0x1e, 0xb7, 0x1e
+0058 1EB4 1EB5
+005C 1EB6 1EB7
+0060 1DB0 1DB1 00764         DB      0xb0, 0x1d, 0xb1, 0x1d, 0xb2, 0x1d, 0xb3, 0x1d, 0xb4, 0x1d, 0xb5, 0x1d
+0064 1DB2 1DB3
+0068 1DB4 1DB5
+006C 1DB6 1DB7 00765         DB      0xb6, 0x1d, 0xb7, 0x1d, 0xb0, 0x1c, 0xb1, 0x1c, 0xb2, 0x1c, 0xb3, 0x1c
+0070 1CB0 1CB1
+0074 1CB2 1CB3
+0078 1CB4 1CB5 00766         DB      0xb4, 0x1c, 0xb5, 0x1c, 0xb6, 0x1c, 0xb7, 0x1c
+007C 1CB6 1CB7
+               00767 ; ; Starting pCode block for Ival
+0080           00768 _button_event_map:
+0080 0691 0591 00769         DB      0x91, 0x06, 0x91, 0x05, 0x90, 0x05, 0x90, 0x06, 0x90, 0x03, 0x90, 0x04
+0084 0590 0690
+0088 0390 0490
+008C 0491 0391 00770         DB      0x91, 0x04, 0x91, 0x03, 0x91, 0x08, 0x91, 0x07, 0x90, 0x07, 0x90, 0x08
+0090 0891 0791
+0094 0790 0890
+0098 0A90 0990 00771         DB      0x90, 0x0a, 0x90, 0x09, 0x91, 0x09, 0x91, 0x0a, 0x92, 0x04, 0x92, 0x03
+009C 0991 0A91
+00A0 0492 0392
+00A4 0393 0493 00772         DB      0x93, 0x03, 0x93, 0x04, 0x93, 0x06, 0x93, 0x05, 0x92, 0x05, 0x92, 0x06
+00A8 0693 0593
+00AC 0592 0692
+00B0 0893 0793 00773         DB      0x93, 0x08, 0x93, 0x07, 0x92, 0x07, 0x92, 0x08, 0x92, 0x0a, 0x92, 0x09
+00B4 0792 0892
+00B8 0A92 0992
+00BC 0993 0A93 00774         DB      0x93, 0x09, 0x93, 0x0a, 0x95, 0x04, 0x95, 0x03, 0x94, 0x03, 0x94, 0x04
+00C0 0495 0395
+00C4 0394 0494
+00C8 0694 0594 00775         DB      0x94, 0x06, 0x94, 0x05, 0x95, 0x05, 0x95, 0x06, 0x95, 0x08, 0x95, 0x07
+00CC 0595 0695
+00D0 0895 0795
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+00D4 0794 0894 00776         DB      0x94, 0x07, 0x94, 0x08, 0x95, 0x0a, 0x95, 0x09, 0x94, 0x09, 0x94, 0x0a
+00D8 0A95 0995
+00DC 0994 0A94
+00E0 0497 0397 00777         DB      0x97, 0x04, 0x97, 0x03, 0x96, 0x03, 0x96, 0x04, 0x97, 0x06, 0x97, 0x05
+00E4 0396 0496
+00E8 0697 0597
+00EC 0596 0696 00778         DB      0x96, 0x05, 0x96, 0x06, 0x97, 0x08, 0x97, 0x07, 0x96, 0x07, 0x96, 0x08
+00F0 0897 0797
+00F4 0796 0896
+00F8 0A96 0996 00779         DB      0x96, 0x0a, 0x96, 0x09, 0x97, 0x09, 0x97, 0x0a
+00FC 0997 0A97
+               00780 ; ; Starting pCode block
+0100           00781 __str_0:
+0100 4131 4E49 00782         DB      0x31, 0x41, 0x49, 0x4e, 0x20, 0x20, 0x20, 0x44, 0x49, 0x4e, 0x20, 0x20
+0104 2020 4420
+0108 4E49 2020
+010C 4F44 5455 00783         DB      0x44, 0x4f, 0x55, 0x54, 0x00
+0110 0000
+               00784 ; ; Starting pCode block
+0112           00785 __str_1:
+0112 7878 783A 00786         DB      0x78, 0x78, 0x3a, 0x78, 0x78, 0x78, 0x20, 0x78, 0x78, 0x78, 0x78, 0x20
+0116 7878 7820
+011A 7878 2078
+011E 7878 7878 00787         DB      0x78, 0x78, 0x78, 0x78, 0x00
+0122 0000
+               00788 
+               00789 
+               00790 ; Statistics:
+               00791 ; code size:      964 (0x03c4) bytes ( 0.74%)
+               00792 ;                 482 (0x01e2) words
+               00793 ; udata size:       4 (0x0004) bytes ( 0.31%)
+               00794 ; access size:      8 (0x0008) bytes
+               00795 
+               00796 
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 17
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+FSR0H                             00000FE2
+FSR0L                             00000FE1
+FSR1L                             00000FE9
+FSR2L                             00000FD9
+INDF0                             00000FE7
+PLUSW2                            00000FDB
+POSTDEC1                          00000FED
+POSTINC0                          00000FE6
+PREINC1                           00000FEC
+STATUS                            00000FD8
+TABLAT                            00000FF5
+TBLPTRH                           00000FF7
+TBLPTRL                           00000FF6
+TBLPTRU                           00000FF8
+_00122_DS_                        0000000C
+_00123_DS_                        00000098
+_00125_DS_                        0000005E
+_00126_DS_                        00000062
+_00127_DS_                        0000008E
+_00128_DS_                        00000092
+_00134_DS_                        00000040
+_00135_DS_                        0000003A
+_00138_DS_                        00000060
+_00140_DS_                        0000004A
+_00141_DS_                        0000004C
+_00146_DS_                        00000030
+_00176_DS_                        000000B0
+_00177_DS_                        000000D0
+_00178_DS_                        000000FE
+_00180_DS_                        000000E8
+_00181_DS_                        000000EC
+_ADCON0                           00000000
+_ADCON0bits                       00000000
+_ADCON1                           00000000
+_ADCON1bits                       00000000
+_ADRESH                           00000000
+_ADRESL                           00000000
+_AIN_NotifyChange                 00000000
+_BSR                              00000000
+_CCP1CON                          00000000
+_CCP1CONbits                      00000000
+_CCP2CON                          00000000
+_CCP2CONbits                      00000000
+_CCPR1H                           00000000
+_CCPR1L                           00000000
+_CCPR2H                           00000000
+_CCPR2L                           00000000
+_DIN_NotifyToggle                 00000000
+_DISPLAY_Init                     00000000
+_DISPLAY_Tick                     00000000
+_EEADR                            00000000
+_EECON1                           00000000
+_EECON1bits                       00000000
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+_EECON2                           00000000
+_EEDATA                           00000000
+_ENC_NotifyChange                 00000000
+_FSR0H                            00000000
+_FSR0L                            00000000
+_FSR1H                            00000000
+_FSR1L                            00000000
+_FSR2H                            00000000
+_FSR2L                            00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INTCON                           00000000
+_INTCON2                          00000000
+_INTCON2bits                      00000000
+_INTCON3                          00000000
+_INTCON3bits                      00000000
+_INTCONbits                       00000000
+_IPR1                             00000000
+_IPR1bits                         00000000
+_IPR2                             00000000
+_IPR2bits                         00000000
+_Init                             00000000
+_LATA                             00000000
+_LATAbits                         00000000
+_LATB                             00000000
+_LATBbits                         00000000
+_LATC                             00000000
+_LATCbits                         00000000
+_LATD                             00000000
+_LATDbits                         00000000
+_LATE                             00000000
+_LATEbits                         00000000
+_LVDCON                           00000000
+_LVDCONbits                       00000000
+_MIOS_AIN_DeadbandSet             00000000
+_MIOS_AIN_Muxed                   00000000
+_MIOS_AIN_NumberSet               00000000
+_MIOS_AIN_Pin7bitGet              00000000
+_MIOS_BOX_CFG0                    00000000
+_MIOS_BOX_CFG1                    00000000
+_MIOS_BOX_STAT                    00000000
+_MIOS_DIN_PinGet                  00000000
+_MIOS_DOUT_PinGet                 00000000
+_MIOS_DOUT_PinSet                 00000000
+_MIOS_ENC_PIN_TABLE               00000000
+_MIOS_LCD_Clear                   00000000
+_MIOS_LCD_CursorSet               00000000
+_MIOS_LCD_PrintBCD2               00000000
+_MIOS_LCD_PrintBCD3               00000000
+_MIOS_LCD_PrintCString            00000000
+_MIOS_LCD_PrintChar               00000000
+_MIOS_MIDI_BeginStream            00000000
+_MIOS_MIDI_EndStream              00000000
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 19
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+_MIOS_MIDI_MergerSet              00000000
+_MIOS_MIDI_TxBufferPut            00000000
+_MIOS_MPROC_EVENT_TABLE           00000000
+_MIOS_PARAMETER1                  00000000
+_MIOS_PARAMETER2                  00000000
+_MIOS_PARAMETER3                  00000000
+_MIOS_SRIO_DebounceSet            00000000
+_MIOS_SRIO_NumberSet              00000000
+_MIOS_SRIO_TS_SensitivitySet      00000000
+_MIOS_SRIO_UpdateFrqSet           00000000
+_MPROC_NotifyFoundEvent           00000000
+_MPROC_NotifyReceivedByte         00000000
+_MPROC_NotifyReceivedEvnt         00000000
+_MPROC_NotifyTimeout              00000000
+_OSCCON                           00000000
+_OSCCONbits                       00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PCLATU                           00000000
+_PIE1                             00000000
+_PIE1bits                         00000000
+_PIE2                             00000000
+_PIE2bits                         00000000
+_PIR1                             00000000
+_PIR1bits                         00000000
+_PIR2                             00000000
+_PIR2bits                         00000000
+_PLUSW0                           00000000
+_PLUSW1                           00000000
+_PLUSW2                           00000000
+_PORTA                            00000000
+_PORTAbits                        00000000
+_PORTB                            00000000
+_PORTBbits                        00000000
+_PORTC                            00000000
+_PORTCbits                        00000000
+_PORTD                            00000000
+_PORTDbits                        00000000
+_PORTE                            00000000
+_PORTEbits                        00000000
+_POSTDEC0                         00000000
+_POSTDEC1                         00000000
+_POSTDEC2                         00000000
+_POSTINC0                         00000000
+_POSTINC1                         00000000
+_POSTINC2                         00000000
+_PR2                              00000000
+_PREINC0                          00000000
+_PREINC1                          00000000
+_PREINC2                          00000000
+_PRODH                            00000000
+_PRODL                            00000000
+_RCON                             00000000
+_RCONbits                         00000000
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 20
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+_RCREG                            00000000
+_RCSTA                            00000000
+_RCSTAbits                        00000000
+_SPBRG                            00000000
+_SR_Service_Finish                00000000
+_SR_Service_Prepare               00000000
+_SSPADD                           00000000
+_SSPBUF                           00000000
+_SSPCON1                          00000000
+_SSPCON1bits                      00000000
+_SSPCON2                          00000000
+_SSPCON2bits                      00000000
+_SSPSTAT                          00000000
+_SSPSTATbits                      00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_STKPTR                           00000000
+_STKPTRbits                       00000000
+_T0CON                            00000000
+_T0CONbits                        00000000
+_T1CON                            00000000
+_T1CONbits                        00000000
+_T2CON                            00000000
+_T2CONbits                        00000000
+_T3CON                            00000000
+_T3CONbits                        00000000
+_TABLAT                           00000000
+_TBLPTRH                          00000000
+_TBLPTRL                          00000000
+_TBLPTRU                          00000000
+_TMR0H                            00000000
+_TMR0L                            00000000
+_TMR1H                            00000000
+_TMR1L                            00000000
+_TMR2                             00000000
+_TMR3H                            00000000
+_TMR3L                            00000000
+_TOSH                             00000000
+_TOSL                             00000000
+_TOSU                             00000000
+_TRISA                            00000000
+_TRISAbits                        00000000
+_TRISB                            00000000
+_TRISBbits                        00000000
+_TRISC                            00000000
+_TRISCbits                        00000000
+_TRISD                            00000000
+_TRISDbits                        00000000
+_TRISE                            00000000
+_TRISEbits                        00000000
+_TXREG                            00000000
+_TXSTA                            00000000
+_TXSTAbits                        00000000
+_Tick                             00000000
+gpasm-0.13.5 beta               _output/main__mios-gpasm-tmp.asm11-22-2009  19:11:42         PAGE 21
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+_Timer                            00000000
+_WDTCON                           00000000
+_WDTCONbits                       00000000
+_WREG                             00000000
+__18F452                          00000001
+__str_0                           00000100
+__str_1                           00000112
+_app_flags                        00000000
+_button_event_map                 00000080
+_clipButtons                      00000000
+_last_ain_pin                     00000000
+_last_din_pin                     00000000
+_last_dout_pin                    00000000
+_mios_enc_pin_table               00000000
+_mios_mproc_event_table           00000000
+_pot_event_map                    00000000
+r0x00                             00000010
+r0x01                             00000011
+r0x02                             00000012
+r0x03                             00000013
+r0x04                             00000014
+r0x05                             00000015
+r0x06                             00000016
+r0x07                             00000017
+
+
+Errors   :       0
+Warnings :       0 reported,       0 suppressed
+Messages :       0 reported,       0 suppressed
+
