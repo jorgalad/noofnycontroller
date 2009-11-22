@@ -1,0 +1,700 @@
+gplink-0.13.5 alpha
+Map File - Created 11-21-2009  19:30:07
+ 
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                .org_1800       code   0x003000    program   0x000080
+                .org_1840       code   0x003080    program   0x000200
+                .org_1940       code   0x003280    program   0x000080
+S_main__DoMichaelKnightPattern       code   0x003300    program   0x00108c
+ S_main__DoStartupPattern       code   0x00438c    program   0x000304
+S_main__MPROC_NotifyReceivedEvnt       code   0x004690    program   0x0002ec
+S_main__MPROC_NotifyReceivedByte       code   0x00497c    program   0x0001a0
+      S_main__ClearMatrix       code   0x004b1c    program   0x000156
+      S_main__TestMatrix2       code   0x004c72    program   0x00013a
+      S_main__TestMatrix1       code   0x004dac    program   0x00013a
+                    .code       code   0x004ee6    program   0x000124
+S_main__DoShutdownPattern       code   0x00500a    program   0x000122
+        MIOS_WRAPPER_CODE       code   0x00512c    program   0x00010c
+ S_main__DIN_NotifyToggle       code   0x005238    program   0x000106
+      S_divsint___divsint       code   0x00533e    program   0x0000f6
+S_main__SR_Service_Prepare       code   0x005434    program   0x0000ea
+      S_moduint___moduint       code   0x00551e    program   0x0000c2
+ S_main__AIN_NotifyChange       code   0x0055e0    program   0x0000b8
+      S_divuint___divuint       code   0x005698    program   0x0000b6
+        S_mulint___mulint       code   0x00574e    program   0x0000a0
+     S_main__DISPLAY_Tick       code   0x0057ee    program   0x00009e
+       S_main__DisplayLED       code   0x00588c    program   0x000088
+                 .idata_i       code   0x005914    program   0x000080
+             S_main__Init       code   0x005994    program   0x00006c
+   .MIOS_LCD_PrintCString       code   0x005a00    program   0x000044
+.MIOS_HLP_16bitAddSaturate       code   0x005a44    program   0x000040
+     S_main__DISPLAY_Init       code   0x005a84    program   0x00003e
+         .MIOS_FLASH_Read       code   0x005ac2    program   0x00001a
+        .MIOS_FLASH_Write       code   0x005adc    program   0x00001a
+.MIOS_BANKSTICK_WritePage       code   0x005af6    program   0x000016
+ .MIOS_BANKSTICK_ReadPage       code   0x005b0c    program   0x000016
+.MIOS_LCD_PrintPreconfString       code   0x005b22    program   0x000014
+    .MIOS_LCD_YAddressSet       code   0x005b36    program   0x000014
+.MIOS_CLCD_SpecialCharInit       code   0x005b4a    program   0x000014
+   .MIOS_LCD_PrintMessage       code   0x005b5e    program   0x000012
+    .MIOS_LCD_PrintString       code   0x005b70    program   0x000012
+.MIOS_CLCD_SpecialCharsInit       code   0x005b82    program   0x000012
+      .MIOS_GLCD_FontInit       code   0x005b94    program   0x000012
+    .MIOS_EEPROM_ReadPage       code   0x005ba6    program   0x000012
+   .MIOS_EEPROM_WritePage       code   0x005bb8    program   0x000012
+       .MIOS_MF_FaderMove       code   0x005bca    program   0x000010
+       .MIOS_ENC_SpeedSet       code   0x005bda    program   0x000010
+        .MIOS_LCD_TypeSet       code   0x005bea    program   0x000010
+    .MIOS_BANKSTICK_Write       code   0x005bfa    program   0x000010
+         .MIOS_TIMER_Init       code   0x005c0a    program   0x000010
+       .MIOS_TIMER_ReInit       code   0x005c1a    program   0x000010
+     .MIOS_BANKSTICK_Read       code   0x005c2a    program   0x00000e
+                  APP_LCD       code   0x005c38    program   0x00000e
+ S_main__ENC_NotifyChange       code   0x005c46    program   0x00000e
+S_main__MPROC_NotifyFoundEvent       code   0x005c54    program   0x00000e
+                   .cinit       code   0x005c62    program   0x00000e
+        .MIOS_DOUT_PinSet       code   0x005c70    program   0x00000c
+         .MIOS_DOUT_SRSet       code   0x005c7c    program   0x00000c
+     .MIOS_ENC_Abs7bitAdd       code   0x005c88    program   0x00000c
+     .MIOS_ENC_Abs7bitSet       code   0x005c94    program   0x00000c
+       .MIOS_ENC_SpeedGet       code   0x005ca0    program   0x00000c
+      .MIOS_LCD_PrintBCD4       code   0x005cac    program   0x00000c
+      .MIOS_LCD_PrintBCD5       code   0x005cb8    program   0x00000c
+    .MIOS_GLCD_GCursorSet       code   0x005cc4    program   0x00000c
+       .MIOS_EEPROM_Write       code   0x005cd0    program   0x00000c
+        .MIOS_HLP_Dec2BCD       code   0x005cdc    program   0x00000c
+         .MIOS_AIN_PinGet       code   0x005ce8    program   0x00000a
+        .MIOS_EEPROM_Read       code   0x005cf2    program   0x000006
+    .MIOS_LCD_YAddressGet       code   0x005cf8    program   0x000004
+S_main__SR_Service_Finish       code   0x005cfc    program   0x000002
+S_main__MPROC_NotifyTimeout       code   0x005cfe    program   0x000002
+            S_main__Timer       code   0x005d00    program   0x000002
+             S_main__Tick       code   0x005d02    program   0x000002
+                   .idata      idata   0x000080       data   0x000080
+           MIOS_VARIABLES      udata   00000000       data   0x000010
+               .registers      udata   0x000010       data   0x00000d
+             udata_main_1      udata   0x000100       data   0x000002
+             udata_main_2      udata   0x000102       data   0x000002
+             udata_main_4      udata   0x000104       data   0x000002
+             udata_main_5      udata   0x000106       data   0x000002
+             udata_main_6      udata   0x000108       data   0x000002
+             udata_main_7      udata   0x00010a       data   0x000002
+             udata_main_8      udata   0x00010c       data   0x000002
+             udata_main_9      udata   0x00010e       data   0x000002
+            udata_main_10      udata   0x000110       data   0x000002
+            udata_main_11      udata   0x000112       data   0x000002
+            udata_main_12      udata   0x000114       data   0x000002
+            udata_main_14      udata   0x000116       data   0x000002
+            udata_main_15      udata   0x000118       data   0x000002
+            udata_main_16      udata   0x00011a       data   0x000002
+           udata_mulint_0      udata   0x00011c       data   0x000002
+           udata_mulint_1      udata   0x00011e       data   0x000002
+           udata_mulint_2      udata   0x000120       data   0x000002
+             udata_main_0      udata   0x000122       data   0x000001
+             udata_main_3      udata   0x000123       data   0x000001
+            udata_main_13      udata   0x000124       data   0x000001
+            udata_main_17      udata   0x000125       data   0x000001
+            udata_main_18      udata   0x000126       data   0x000001
+            udata_main_19      udata   0x000127       data   0x000001
+            udata_main_20      udata   0x000128       data   0x000001
+ 
+                              Program Memory Usage
+                               Start         End
+                           ---------   ---------
+                            0x003000    0x00307f
+                            0x003080    0x00327f
+                            0x003280    0x0032ff
+                            0x00512c    0x005237
+                            0x005ce8    0x005cf1
+                            0x005bca    0x005bd9
+                            0x005c70    0x005c7b
+                            0x005c7c    0x005c87
+                            0x005c88    0x005c93
+                            0x005c94    0x005c9f
+                            0x005ca0    0x005cab
+                            0x005bda    0x005be9
+                            0x005cac    0x005cb7
+                            0x005cb8    0x005cc3
+                            0x005b5e    0x005b6f
+                            0x005b22    0x005b35
+                            0x005b70    0x005b81
+                            0x005bea    0x005bf9
+                            0x005cf8    0x005cfb
+                            0x005b36    0x005b49
+                            0x005b4a    0x005b5d
+                            0x005b82    0x005b93
+                            0x005b94    0x005ba5
+                            0x005cc4    0x005ccf
+                            0x005cf2    0x005cf7
+                            0x005cd0    0x005cdb
+                            0x005ba6    0x005bb7
+                            0x005bb8    0x005bc9
+                            0x005ac2    0x005adb
+                            0x005adc    0x005af5
+                            0x005c2a    0x005c37
+                            0x005bfa    0x005c09
+                            0x005af6    0x005b0b
+                            0x005b0c    0x005b21
+                            0x005c0a    0x005c19
+                            0x005c1a    0x005c29
+                            0x005a44    0x005a83
+                            0x005cdc    0x005ce7
+                            0x005a00    0x005a43
+                            0x005c38    0x005c45
+                            0x005914    0x005993
+                            0x003300    0x00438b
+                            0x004c72    0x004dab
+                            0x004dac    0x004ee5
+                            0x00500a    0x00512b
+                            0x00438c    0x00468f
+                            0x004b1c    0x004c71
+                            0x0055e0    0x005697
+                            0x005c46    0x005c53
+                            0x005238    0x00533d
+                            0x005cfc    0x005cfd
+                            0x005434    0x00551d
+                            0x00588c    0x005913
+                            0x00497c    0x004b1b
+                            0x005cfe    0x005cff
+                            0x005c54    0x005c61
+                            0x004690    0x00497b
+                            0x0057ee    0x00588b
+                            0x005a84    0x005ac1
+                            0x005d00    0x005d01
+                            0x005d02    0x005d03
+                            0x005994    0x0059ff
+                            0x004ee6    0x005009
+                            0x00533e    0x005433
+                            0x00574e    0x0057ed
+                            0x00551e    0x0055df
+                            0x005698    0x00574d
+                            0x005c62    0x005c6f
+ 
+                            5762 program addresses used
+ 
+                              Symbols
+                     Name    Address   Location    Storage File
+                ---------  ---------  ---------  --------- ---------
+               _User_Init   0x003000    program     static ./include/asm\user_vectors.inc
+               _USER_Tick   0x003004    program     static ./include/asm\user_vectors.inc
+              _USER_Timer   0x003008    program     static ./include/asm\user_vectors.inc
+ _USER_MPROC_DebugTrigger   0x00300c    program     static ./include/asm\user_vectors.inc
+       _USER_DISPLAY_Init   0x003010    program     static ./include/asm\user_vectors.inc
+       _USER_DISPLAY_Tick   0x003014    program     static ./include/asm\user_vectors.inc
+ _USER_SR_Service_Prepare   0x003018    program     static ./include/asm\user_vectors.inc
+  _USER_SR_Service_Finish   0x00301c    program     static ./include/asm\user_vectors.inc
+   _USER_DIN_NotifyToggle   0x003020    program     static ./include/asm\user_vectors.inc
+   _USER_ENC_NotifyChange   0x003024    program     static ./include/asm\user_vectors.inc
+   _USER_AIN_NotifyChange   0x003028    program     static ./include/asm\user_vectors.inc
+_USER_MPROC_NotifyReceivedByte   0x00302c    program     static ./include/asm\user_vectors.inc
+_USER_MPROC_NotifyTimeout   0x003030    program     static ./include/asm\user_vectors.inc
+_USER_MPROC_NotifyReceivedEvent   0x003034    program     static ./include/asm\user_vectors.inc
+_USER_MPROC_NotifyFoundEvent   0x003038    program     static ./include/asm\user_vectors.inc
+           _USER_LCD_Init   0x00303c    program     static ./include/asm\user_vectors.inc
+          _USER_LCD_Clear   0x003040    program     static ./include/asm\user_vectors.inc
+      _USER_LCD_CursorSet   0x003044    program     static ./include/asm\user_vectors.inc
+      _USER_LCD_PrintChar   0x003048    program     static ./include/asm\user_vectors.inc
+      _USER_MIDI_NotifyRx   0x00304c    program     static ./include/asm\user_vectors.inc
+      _USER_MIDI_NotifyTx   0x003050    program     static ./include/asm\user_vectors.inc
+           _USER_LCD_Data   0x003054    program     static ./include/asm\user_vectors.inc
+            _USER_LCD_Cmd   0x003058    program     static ./include/asm\user_vectors.inc
+_USER_LCD_SpecialCharInit   0x00305c    program     static ./include/asm\user_vectors.inc
+         USER_RESERVED_25   0x003060    program     static ./include/asm\user_vectors.inc
+         USER_RESERVED_26   0x003064    program     static ./include/asm\user_vectors.inc
+         USER_RESERVED_27   0x003068    program     static ./include/asm\user_vectors.inc
+         USER_RESERVED_28   0x00306c    program     static ./include/asm\user_vectors.inc
+         USER_RESERVED_29   0x003070    program     static ./include/asm\user_vectors.inc
+         USER_RESERVED_30   0x003074    program     static ./include/asm\user_vectors.inc
+         USER_RESERVED_31   0x003078    program     static ./include/asm\user_vectors.inc
+         USER_RESERVED_32   0x00307c    program     static ./include/asm\user_vectors.inc
+  _MIOS_MPROC_EVENT_TABLE   0x003080    program     static ./include/asm\mios_mt_table.inc
+   MIOS_MPROC_EVENT_TABLE   0x003080    program     static ./include/asm\mios_mt_table.inc
+      _MIOS_ENC_PIN_TABLE   0x003280    program     static ./include/asm\mios_enc_table.inc
+       MIOS_ENC_PIN_TABLE   0x003280    program     static ./include/asm\mios_enc_table.inc
+           _MIOS_BOX_CFG0   00000000       data     extern modules/mios_wrapper/mios_wrapper.asm
+           _MIOS_BOX_CFG1   0x000001       data     extern modules/mios_wrapper/mios_wrapper.asm
+           _MIOS_BOX_STAT   0x000002       data     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_PARAMETER1   0x000003       data     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_PARAMETER2   0x000004       data     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_PARAMETER3   0x000005       data     extern modules/mios_wrapper/mios_wrapper.asm
+                    _TMP1   0x000006       data     static modules/mios_wrapper/mios_wrapper.asm
+                    _TMP2   0x000007       data     static modules/mios_wrapper/mios_wrapper.asm
+                    _TMP3   0x000008       data     static modules/mios_wrapper/mios_wrapper.asm
+                    _TMP4   0x000009       data     static modules/mios_wrapper/mios_wrapper.asm
+                    _TMP5   0x00000a       data     static modules/mios_wrapper/mios_wrapper.asm
+                _IRQ_TMP1   0x00000b       data     static modules/mios_wrapper/mios_wrapper.asm
+                _IRQ_TMP2   0x00000c       data     static modules/mios_wrapper/mios_wrapper.asm
+                _IRQ_TMP3   0x00000d       data     static modules/mios_wrapper/mios_wrapper.asm
+                _IRQ_TMP4   0x00000e       data     static modules/mios_wrapper/mios_wrapper.asm
+                _IRQ_TMP5   0x00000f       data     static modules/mios_wrapper/mios_wrapper.asm
+                USER_Init   0x00512c    program     static modules/mios_wrapper/mios_wrapper.asm
+                USER_Tick   0x005138    program     static modules/mios_wrapper/mios_wrapper.asm
+               USER_Timer   0x005144    program     static modules/mios_wrapper/mios_wrapper.asm
+  USER_MPROC_DebugTrigger   0x005162    program     static modules/mios_wrapper/mios_wrapper.asm
+        USER_DISPLAY_Init   0x005164    program     static modules/mios_wrapper/mios_wrapper.asm
+        USER_DISPLAY_Tick   0x005170    program     static modules/mios_wrapper/mios_wrapper.asm
+USER_MPROC_NotifyReceivedEvent   0x00517c    program     static modules/mios_wrapper/mios_wrapper.asm
+USER_MPROC_NotifyFoundEvent   0x005192    program     static modules/mios_wrapper/mios_wrapper.asm
+ USER_MPROC_NotifyTimeout   0x0051ac    program     static modules/mios_wrapper/mios_wrapper.asm
+USER_MPROC_NotifyReceivedByte   0x0051b8    program     static modules/mios_wrapper/mios_wrapper.asm
+       USER_MIDI_NotifyTx   0x0051c4    program     static modules/mios_wrapper/mios_wrapper.asm
+       USER_MIDI_NotifyRx   0x0051c6    program     static modules/mios_wrapper/mios_wrapper.asm
+    USER_DIN_NotifyToggle   0x0051c8    program     static modules/mios_wrapper/mios_wrapper.asm
+    USER_ENC_NotifyChange   0x0051d8    program     static modules/mios_wrapper/mios_wrapper.asm
+  USER_SR_Service_Prepare   0x0051e8    program     static modules/mios_wrapper/mios_wrapper.asm
+   USER_SR_Service_Finish   0x005206    program     static modules/mios_wrapper/mios_wrapper.asm
+    USER_AIN_NotifyChange   0x005224    program     static modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MIDI_BeginStream   0x002c00    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_MIDI_DeviceIDAutoSet   0x002c04    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MIDI_DeviceIDGet   0x002c08    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MIDI_DeviceIDSet   0x002c0c    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_MIDI_EndStream   0x002c10    program     extern modules/mios_wrapper/mios_wrapper.asm
+          _MIOS_MIDI_Init   0x002c14    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_MIDI_InterfaceAutoSet   0x002c18    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_MIDI_InterfaceGet   0x002c1c    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_MIDI_InterfaceSet   0x002c20    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_MIDI_MergerGet   0x002c24    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_MIDI_MergerSet   0x002c28    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_MIDI_RxBufferFree   0x002c2c    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MIDI_RxBufferGet   0x002c30    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MIDI_RxBufferPut   0x002c34    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_MIDI_RxBufferUsed   0x002c38    program     extern modules/mios_wrapper/mios_wrapper.asm
+ _MIOS_MIDI_TxBufferFlush   0x002c3c    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_MIDI_TxBufferFree   0x002c40    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MIDI_TxBufferGet   0x002c44    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MIDI_TxBufferPut   0x002c48    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_MIDI_TxBufferUsed   0x002c4c    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_MPROC_MergerDisable   0x002c50    program     extern modules/mios_wrapper/mios_wrapper.asm
+ _MIOS_MPROC_MergerEnable   0x002c54    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_MPROC_MergerGet   0x002c58    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_AIN_DeadbandGet   0x002c5c    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_AIN_DeadbandSet   0x002c60    program     extern modules/mios_wrapper/mios_wrapper.asm
+          _MIOS_AIN_Muxed   0x002c64    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_AIN_NumberGet   0x002c68    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_AIN_NumberSet   0x002c6c    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_AIN_Pin7bitGet   0x002c70    program     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_AIN_PinGet   0x005ce8    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_AIN_PinLSBGet   0x002c78    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_AIN_PinMSBGet   0x002c7c    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_AIN_UnMuxed   0x002c80    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_MF_PWM_DutyCycleDownGet   0x002c84    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_MF_PWM_DutyCycleDownSet   0x002c88    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_MF_PWM_DutyCycleUpGet   0x002c8c    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_MF_PWM_DutyCycleUpSet   0x002c90    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_MF_DeadbandGet   0x002c94    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_MF_DeadbandSet   0x002c98    program     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_MF_Disable   0x002c9c    program     extern modules/mios_wrapper/mios_wrapper.asm
+          _MIOS_MF_Enable   0x002ca0    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_MF_FaderMove   0x005bca    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_MF_SuspendDisable   0x002ca8    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MF_SuspendEnable   0x002cac    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_MF_SuspendGet   0x002cb0    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MF_PWM_PeriodGet   0x002dfc    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_MF_PWM_PeriodSet   0x002e00    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_MF_TouchDetectionReset   0x002e2c    program     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_DIN_PinGet   0x002cb4    program     extern modules/mios_wrapper/mios_wrapper.asm
+          _MIOS_DIN_SRGet   0x002cb8    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_DOUT_PinGet   0x002cbc    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_DOUT_PinSet   0x005c70    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_DOUT_PinSet0   0x002cc4    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_DOUT_PinSet1   0x002cc8    program     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_DOUT_SRGet   0x002ccc    program     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_DOUT_SRSet   0x005c7c    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_ENC_Abs7bitAdd   0x005c88    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_ENC_Abs7bitGet   0x002cd8    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_ENC_Abs7bitSet   0x005c94    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_ENC_NumberGet   0x002ce0    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_ENC_SpeedGet   0x005ca0    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_ENC_SpeedSet   0x005bda    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_SRIO_NumberGet   0x002cec    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_SRIO_NumberSet   0x002cf0    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_SRIO_TS_SensitivityGet   0x002cf4    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_SRIO_TS_SensitivitySet   0x002cf8    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_SRIO_UpdateFrqGet   0x002cfc    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_SRIO_UpdateFrqSet   0x002d00    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_SRIO_DebounceGet   0x002e28    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_SRIO_DebounceSet   0x002e24    program     extern modules/mios_wrapper/mios_wrapper.asm
+          _MIOS_LCD_Clear   0x002d04    program     extern modules/mios_wrapper/mios_wrapper.asm
+            _MIOS_LCD_Cmd   0x002d08    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_CursorGet   0x002d0c    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_CursorSet   0x002d10    program     extern modules/mios_wrapper/mios_wrapper.asm
+           _MIOS_LCD_Data   0x002d14    program     extern modules/mios_wrapper/mios_wrapper.asm
+           _MIOS_LCD_Init   0x002d18    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_PrintBCD1   0x002d1c    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_PrintBCD2   0x002d20    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_PrintBCD3   0x002d24    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_PrintBCD4   0x005cac    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_PrintBCD5   0x005cb8    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_PrintChar   0x002d28    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_PrintHex1   0x002d2c    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_LCD_PrintHex2   0x002d30    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_LCD_PrintMessage   0x005b5e    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_LCD_PrintPreconfString   0x005b22    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_LCD_PrintString   0x005b70    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_LCD_TypeAutoSet   0x002d40    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_LCD_TypeGet   0x002d44    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_LCD_TypeSet   0x005bea    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_LCD_YAddressGet   0x005cf8    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_LCD_YAddressSet   0x005b36    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_LCD_MessageStart   0x002df4    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_LCD_MessageStop   0x002df8    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_CLCD_SpecialCharInit   0x005b4a    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_CLCD_SpecialCharsInit   0x005b82    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_GLCD_FontInit   0x005b94    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_GLCD_GCursorGet   0x002d58    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_GLCD_GCursorSet   0x005cc4    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_EEPROM_Read   0x005cf2    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_EEPROM_Write   0x005cd0    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_EEPROM_ReadPage   0x005ba6    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_EEPROM_WritePage   0x005bb8    program     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_FLASH_Read   0x005ac2    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_FLASH_Write   0x005adc    program     extern modules/mios_wrapper/mios_wrapper.asm
+     _MIOS_BANKSTICK_Read   0x005c2a    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_BANKSTICK_Write   0x005bfa    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_BANKSTICK_CtrlSet   0x002ddc    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_BANKSTICK_CtrlGet   0x002de0    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_BANKSTICK_WritePage   0x005af6    program     extern modules/mios_wrapper/mios_wrapper.asm
+ _MIOS_BANKSTICK_ReadPage   0x005b0c    program     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_TIMER_Init   0x005c0a    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_TIMER_Start   0x002d7c    program     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_TIMER_Stop   0x002d80    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_TIMER_ReInit   0x005c1a    program     extern modules/mios_wrapper/mios_wrapper.asm
+  _MIOS_HLP_GetBitANDMask   0x002d88    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_HLP_GetBitORMask   0x002d8c    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_HLP_16bitAddSaturate   0x005a44    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_HLP_Dec2BCD   0x005cdc    program     extern modules/mios_wrapper/mios_wrapper.asm
+              _MIOS_Delay   0x002d9c    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_GPCounterGet   0x002da0    program     extern modules/mios_wrapper/mios_wrapper.asm
+              _MIOS_Reset   0x002da4    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_SystemResume   0x002da8    program     extern modules/mios_wrapper/mios_wrapper.asm
+      _MIOS_SystemSuspend   0x002dac    program     extern modules/mios_wrapper/mios_wrapper.asm
+         _MIOS_UserResume   0x002db0    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_UserSuspend   0x002db4    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_DIN_PinAutoRepeatEnable   0x002dbc    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_DIN_PinAutoRepeatDisable   0x002dc0    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_DIN_PinAutoRepeatGet   0x002dc4    program     extern modules/mios_wrapper/mios_wrapper.asm
+ _MIOS_AIN_DynamicPrioSet   0x002dd0    program     extern modules/mios_wrapper/mios_wrapper.asm
+ _MIOS_AIN_DynamicPrioGet   0x002dd4    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_AIN_LastPinsGet   0x002dd8    program     extern modules/mios_wrapper/mios_wrapper.asm
+          _MIOS_IIC_Start   0x002e04    program     extern modules/mios_wrapper/mios_wrapper.asm
+           _MIOS_IIC_Stop   0x002e08    program     extern modules/mios_wrapper/mios_wrapper.asm
+       _MIOS_IIC_ByteSend   0x002e0c    program     extern modules/mios_wrapper/mios_wrapper.asm
+    _MIOS_IIC_ByteReceive   0x002e10    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_IIC_AckSend   0x002e14    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_IIC_NakSend   0x002e18    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_IIC_CtrlSet   0x002e1c    program     extern modules/mios_wrapper/mios_wrapper.asm
+        _MIOS_IIC_CtrlGet   0x002e20    program     extern modules/mios_wrapper/mios_wrapper.asm
+   _MIOS_LCD_PrintCString   0x005a00    program     extern modules/mios_wrapper/mios_wrapper.asm
+_MIOS_LCD_PrintCString_Code   0x005a10    program     static modules/mios_wrapper/mios_wrapper.asm
+_MIOS_LCD_PrintCStringLoop_Code   0x005a12    program     static modules/mios_wrapper/mios_wrapper.asm
+_MIOS_LCD_PrintCString_Code_End   0x005a1e    program     static modules/mios_wrapper/mios_wrapper.asm
+_MIOS_LCD_PrintCString_RAM   0x005a20    program     static modules/mios_wrapper/mios_wrapper.asm
+_MIOS_LCD_PrintCStringLoop_RAM   0x005a30    program     static modules/mios_wrapper/mios_wrapper.asm
+_MIOS_LCD_PrintCString_RAM_End   0x005a3a    program     static modules/mios_wrapper/mios_wrapper.asm
+            USER_LCD_Init   0x005c38    program     extern ./modules/app_lcd/dummy\app_lcd.inc
+           USER_LCD_Clear   0x005c3a    program     extern ./modules/app_lcd/dummy\app_lcd.inc
+       USER_LCD_CursorSet   0x005c3c    program     extern ./modules/app_lcd/dummy\app_lcd.inc
+       USER_LCD_PrintChar   0x005c3e    program     extern ./modules/app_lcd/dummy\app_lcd.inc
+            USER_LCD_Data   0x005c40    program     extern ./modules/app_lcd/dummy\app_lcd.inc
+             USER_LCD_Cmd   0x005c42    program     extern ./modules/app_lcd/dummy\app_lcd.inc
+ USER_LCD_SpecialCharInit   0x005c44    program     extern ./modules/app_lcd/dummy\app_lcd.inc
+                _matrix_1   0x000080       data     static _output/main__mios-gpasm-tmp.asm
+                _matrix_2   0x0000c0       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x00   0x000010       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x01   0x000011       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x02   0x000012       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x03   0x000013       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x04   0x000014       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x05   0x000015       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x06   0x000016       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x07   0x000017       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x08   0x000018       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x09   0x000019       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x0a   0x00001a       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x0b   0x00001b       data     static _output/main__mios-gpasm-tmp.asm
+                    r0x0c   0x00001c       data     static _output/main__mios-gpasm-tmp.asm
+_SR_Service_Prepare_row_1_1   0x000122       data     static _output/main__mios-gpasm-tmp.asm
+_DoStartupPattern_row_1_1   0x000100       data     static _output/main__mios-gpasm-tmp.asm
+_DoStartupPattern_column_1_1   0x000102       data     static _output/main__mios-gpasm-tmp.asm
+_DoStartupPattern_color_1_1   0x000123       data     static _output/main__mios-gpasm-tmp.asm
+_DoShutdownPattern_row_1_1   0x000104       data     static _output/main__mios-gpasm-tmp.asm
+_DoShutdownPattern_column_1_1   0x000106       data     static _output/main__mios-gpasm-tmp.asm
+     _TestMatrix1_row_1_1   0x000108       data     static _output/main__mios-gpasm-tmp.asm
+  _TestMatrix1_column_1_1   0x00010a       data     static _output/main__mios-gpasm-tmp.asm
+     _TestMatrix2_row_1_1   0x00010c       data     static _output/main__mios-gpasm-tmp.asm
+  _TestMatrix2_column_1_1   0x00010e       data     static _output/main__mios-gpasm-tmp.asm
+_DoMichaelKnightPattern_column_1_1   0x000110       data     static _output/main__mios-gpasm-tmp.asm
+               _test_mode   0x000112       data     extern _output/main__mios-gpasm-tmp.asm
+            _record_sysex   0x000114       data     extern _output/main__mios-gpasm-tmp.asm
+              _last_sysex   0x000124       data     extern _output/main__mios-gpasm-tmp.asm
+             _clock_ticks   0x000116       data     extern _output/main__mios-gpasm-tmp.asm
+             _clock_beats   0x000118       data     extern _output/main__mios-gpasm-tmp.asm
+              _clock_bars   0x00011a       data     extern _output/main__mios-gpasm-tmp.asm
+               _app_flags   0x000125       data     extern _output/main__mios-gpasm-tmp.asm
+            _last_ain_pin   0x000126       data     extern _output/main__mios-gpasm-tmp.asm
+            _last_din_pin   0x000127       data     extern _output/main__mios-gpasm-tmp.asm
+           _last_dout_pin   0x000128       data     extern _output/main__mios-gpasm-tmp.asm
+  _DoMichaelKnightPattern   0x003300    program     extern _output/main__mios-gpasm-tmp.asm
+               _00572_DS_   0x00333a    program     static _output/main__mios-gpasm-tmp.asm
+               _00582_DS_   0x003348    program     static _output/main__mios-gpasm-tmp.asm
+               _00583_DS_   0x003362    program     static _output/main__mios-gpasm-tmp.asm
+               _00584_DS_   0x003376    program     static _output/main__mios-gpasm-tmp.asm
+               _00585_DS_   0x0033b8    program     static _output/main__mios-gpasm-tmp.asm
+               _00551_DS_   0x003404    program     static _output/main__mios-gpasm-tmp.asm
+               _00552_DS_   0x003446    program     static _output/main__mios-gpasm-tmp.asm
+               _00553_DS_   0x0034c0    program     static _output/main__mios-gpasm-tmp.asm
+               _00554_DS_   0x003574    program     static _output/main__mios-gpasm-tmp.asm
+               _00555_DS_   0x003664    program     static _output/main__mios-gpasm-tmp.asm
+               _00556_DS_   0x003754    program     static _output/main__mios-gpasm-tmp.asm
+               _00557_DS_   0x003844    program     static _output/main__mios-gpasm-tmp.asm
+               _00558_DS_   0x003934    program     static _output/main__mios-gpasm-tmp.asm
+               _00559_DS_   0x003a24    program     static _output/main__mios-gpasm-tmp.asm
+               _00560_DS_   0x003b16    program     static _output/main__mios-gpasm-tmp.asm
+               _00561_DS_   0x003c0c    program     static _output/main__mios-gpasm-tmp.asm
+               _00562_DS_   0x003d04    program     static _output/main__mios-gpasm-tmp.asm
+               _00563_DS_   0x003dfc    program     static _output/main__mios-gpasm-tmp.asm
+               _00564_DS_   0x003ef4    program     static _output/main__mios-gpasm-tmp.asm
+               _00565_DS_   0x003fea    program     static _output/main__mios-gpasm-tmp.asm
+               _00566_DS_   0x0040e0    program     static _output/main__mios-gpasm-tmp.asm
+               _00567_DS_   0x0041d6    program     static _output/main__mios-gpasm-tmp.asm
+               _00568_DS_   0x004290    program     static _output/main__mios-gpasm-tmp.asm
+               _00569_DS_   0x00430e    program     static _output/main__mios-gpasm-tmp.asm
+               _00574_DS_   0x00434e    program     static _output/main__mios-gpasm-tmp.asm
+               _10551_DS_   0x004356    program     static _output/main__mios-gpasm-tmp.asm
+               _00575_DS_   0x00435a    program     static _output/main__mios-gpasm-tmp.asm
+             _TestMatrix2   0x004c72    program     extern _output/main__mios-gpasm-tmp.asm
+               _00532_DS_   0x004ca0    program     static _output/main__mios-gpasm-tmp.asm
+               _00544_DS_   0x004cae    program     static _output/main__mios-gpasm-tmp.asm
+               _00524_DS_   0x004cb8    program     static _output/main__mios-gpasm-tmp.asm
+               _00545_DS_   0x004cc4    program     static _output/main__mios-gpasm-tmp.asm
+               _20552_DS_   0x004d12    program     static _output/main__mios-gpasm-tmp.asm
+               _00527_DS_   0x004d14    program     static _output/main__mios-gpasm-tmp.asm
+               _00528_DS_   0x004d1a    program     static _output/main__mios-gpasm-tmp.asm
+               _00546_DS_   0x004d26    program     static _output/main__mios-gpasm-tmp.asm
+               _30553_DS_   0x004d6a    program     static _output/main__mios-gpasm-tmp.asm
+               _00531_DS_   0x004d6c    program     static _output/main__mios-gpasm-tmp.asm
+               _40554_DS_   0x004d80    program     static _output/main__mios-gpasm-tmp.asm
+               _00535_DS_   0x004d82    program     static _output/main__mios-gpasm-tmp.asm
+             _TestMatrix1   0x004dac    program     extern _output/main__mios-gpasm-tmp.asm
+               _00505_DS_   0x004dda    program     static _output/main__mios-gpasm-tmp.asm
+               _00517_DS_   0x004de8    program     static _output/main__mios-gpasm-tmp.asm
+               _00497_DS_   0x004df2    program     static _output/main__mios-gpasm-tmp.asm
+               _00518_DS_   0x004dfe    program     static _output/main__mios-gpasm-tmp.asm
+               _50555_DS_   0x004e4c    program     static _output/main__mios-gpasm-tmp.asm
+               _00500_DS_   0x004e4e    program     static _output/main__mios-gpasm-tmp.asm
+               _00501_DS_   0x004e54    program     static _output/main__mios-gpasm-tmp.asm
+               _00519_DS_   0x004e60    program     static _output/main__mios-gpasm-tmp.asm
+               _60556_DS_   0x004ea4    program     static _output/main__mios-gpasm-tmp.asm
+               _00504_DS_   0x004ea6    program     static _output/main__mios-gpasm-tmp.asm
+               _70557_DS_   0x004eba    program     static _output/main__mios-gpasm-tmp.asm
+               _00508_DS_   0x004ebc    program     static _output/main__mios-gpasm-tmp.asm
+       _DoShutdownPattern   0x00500a    program     extern _output/main__mios-gpasm-tmp.asm
+               _00478_DS_   0x00502c    program     static _output/main__mios-gpasm-tmp.asm
+               _00490_DS_   0x005038    program     static _output/main__mios-gpasm-tmp.asm
+               _00470_DS_   0x005042    program     static _output/main__mios-gpasm-tmp.asm
+               _00491_DS_   0x00504e    program     static _output/main__mios-gpasm-tmp.asm
+               _80558_DS_   0x00509c    program     static _output/main__mios-gpasm-tmp.asm
+               _00473_DS_   0x00509e    program     static _output/main__mios-gpasm-tmp.asm
+               _00474_DS_   0x0050a4    program     static _output/main__mios-gpasm-tmp.asm
+               _00492_DS_   0x0050b0    program     static _output/main__mios-gpasm-tmp.asm
+               _90559_DS_   0x0050f0    program     static _output/main__mios-gpasm-tmp.asm
+               _00477_DS_   0x0050f2    program     static _output/main__mios-gpasm-tmp.asm
+              _100560_DS_   0x005100    program     static _output/main__mios-gpasm-tmp.asm
+               _00481_DS_   0x005102    program     static _output/main__mios-gpasm-tmp.asm
+        _DoStartupPattern   0x00438c    program     extern _output/main__mios-gpasm-tmp.asm
+               _00427_DS_   0x0043bc    program     static _output/main__mios-gpasm-tmp.asm
+               _00419_DS_   0x0043ce    program     static _output/main__mios-gpasm-tmp.asm
+               _00459_DS_   0x0043da    program     static _output/main__mios-gpasm-tmp.asm
+              _110561_DS_   0x004428    program     static _output/main__mios-gpasm-tmp.asm
+               _00422_DS_   0x00442a    program     static _output/main__mios-gpasm-tmp.asm
+               _00423_DS_   0x004430    program     static _output/main__mios-gpasm-tmp.asm
+               _00460_DS_   0x00443c    program     static _output/main__mios-gpasm-tmp.asm
+              _120562_DS_   0x004480    program     static _output/main__mios-gpasm-tmp.asm
+               _00426_DS_   0x004482    program     static _output/main__mios-gpasm-tmp.asm
+              _130563_DS_   0x004492    program     static _output/main__mios-gpasm-tmp.asm
+               _00430_DS_   0x004494    program     static _output/main__mios-gpasm-tmp.asm
+               _00439_DS_   0x0044b2    program     static _output/main__mios-gpasm-tmp.asm
+               _00461_DS_   0x0044c0    program     static _output/main__mios-gpasm-tmp.asm
+               _00462_DS_   0x0044dc    program     static _output/main__mios-gpasm-tmp.asm
+               _00463_DS_   0x004518    program     static _output/main__mios-gpasm-tmp.asm
+               _00411_DS_   0x004530    program     static _output/main__mios-gpasm-tmp.asm
+               _00412_DS_   0x004538    program     static _output/main__mios-gpasm-tmp.asm
+               _00413_DS_   0x004540    program     static _output/main__mios-gpasm-tmp.asm
+               _00414_DS_   0x004548    program     static _output/main__mios-gpasm-tmp.asm
+               _00415_DS_   0x004550    program     static _output/main__mios-gpasm-tmp.asm
+               _00416_DS_   0x004558    program     static _output/main__mios-gpasm-tmp.asm
+               _00417_DS_   0x004560    program     static _output/main__mios-gpasm-tmp.asm
+               _00418_DS_   0x004564    program     static _output/main__mios-gpasm-tmp.asm
+               _00431_DS_   0x00456a    program     static _output/main__mios-gpasm-tmp.asm
+               _00464_DS_   0x004576    program     static _output/main__mios-gpasm-tmp.asm
+              _140564_DS_   0x0045e2    program     static _output/main__mios-gpasm-tmp.asm
+               _00434_DS_   0x0045e4    program     static _output/main__mios-gpasm-tmp.asm
+               _00435_DS_   0x0045ea    program     static _output/main__mios-gpasm-tmp.asm
+               _00465_DS_   0x0045f6    program     static _output/main__mios-gpasm-tmp.asm
+              _150565_DS_   0x004654    program     static _output/main__mios-gpasm-tmp.asm
+               _00438_DS_   0x004656    program     static _output/main__mios-gpasm-tmp.asm
+              _160566_DS_   0x004664    program     static _output/main__mios-gpasm-tmp.asm
+               _00442_DS_   0x004666    program     static _output/main__mios-gpasm-tmp.asm
+             _ClearMatrix   0x004b1c    program     extern _output/main__mios-gpasm-tmp.asm
+               _00400_DS_   0x004b5e    program     static _output/main__mios-gpasm-tmp.asm
+               _00402_DS_   0x004b68    program     static _output/main__mios-gpasm-tmp.asm
+               _00390_DS_   0x004b6a    program     static _output/main__mios-gpasm-tmp.asm
+               _00371_DS_   0x004b72    program     static _output/main__mios-gpasm-tmp.asm
+               _00403_DS_   0x004b7c    program     static _output/main__mios-gpasm-tmp.asm
+               _00367_DS_   0x004b8e    program     static _output/main__mios-gpasm-tmp.asm
+               _00404_DS_   0x004b98    program     static _output/main__mios-gpasm-tmp.asm
+               _00373_DS_   0x004bba    program     static _output/main__mios-gpasm-tmp.asm
+               _00374_DS_   0x004bca    program     static _output/main__mios-gpasm-tmp.asm
+               _00394_DS_   0x004bd8    program     static _output/main__mios-gpasm-tmp.asm
+               _00379_DS_   0x004be0    program     static _output/main__mios-gpasm-tmp.asm
+               _00405_DS_   0x004bea    program     static _output/main__mios-gpasm-tmp.asm
+               _00375_DS_   0x004bfc    program     static _output/main__mios-gpasm-tmp.asm
+               _00406_DS_   0x004c06    program     static _output/main__mios-gpasm-tmp.asm
+               _00381_DS_   0x004c28    program     static _output/main__mios-gpasm-tmp.asm
+               _00382_DS_   0x004c38    program     static _output/main__mios-gpasm-tmp.asm
+               _00383_DS_   0x004c44    program     static _output/main__mios-gpasm-tmp.asm
+        _AIN_NotifyChange   0x0055e0    program     extern _output/main__mios-gpasm-tmp.asm
+        _ENC_NotifyChange   0x005c46    program     extern _output/main__mios-gpasm-tmp.asm
+        _DIN_NotifyToggle   0x005238    program     extern _output/main__mios-gpasm-tmp.asm
+               _00330_DS_   0x0052bc    program     static _output/main__mios-gpasm-tmp.asm
+               _00331_DS_   0x0052c0    program     static _output/main__mios-gpasm-tmp.asm
+               _00340_DS_   0x0052d6    program     static _output/main__mios-gpasm-tmp.asm
+               _00341_DS_   0x0052d8    program     static _output/main__mios-gpasm-tmp.asm
+               _00318_DS_   0x0052fc    program     static _output/main__mios-gpasm-tmp.asm
+               _00319_DS_   0x005302    program     static _output/main__mios-gpasm-tmp.asm
+               _00320_DS_   0x005308    program     static _output/main__mios-gpasm-tmp.asm
+               _00321_DS_   0x00530e    program     static _output/main__mios-gpasm-tmp.asm
+               _00322_DS_   0x005314    program     static _output/main__mios-gpasm-tmp.asm
+               _00326_DS_   0x005318    program     static _output/main__mios-gpasm-tmp.asm
+       _SR_Service_Finish   0x005cfc    program     extern _output/main__mios-gpasm-tmp.asm
+      _SR_Service_Prepare   0x005434    program     extern _output/main__mios-gpasm-tmp.asm
+               _00299_DS_   0x005482    program     static _output/main__mios-gpasm-tmp.asm
+               _00309_DS_   0x00548c    program     static _output/main__mios-gpasm-tmp.asm
+               _00303_DS_   0x005508    program     static _output/main__mios-gpasm-tmp.asm
+              _DisplayLED   0x00588c    program     extern _output/main__mios-gpasm-tmp.asm
+_MPROC_NotifyReceivedByte   0x00497c    program     extern _output/main__mios-gpasm-tmp.asm
+               _00273_DS_   0x0049ac    program     static _output/main__mios-gpasm-tmp.asm
+               _00217_DS_   0x0049c0    program     static _output/main__mios-gpasm-tmp.asm
+               _00218_DS_   0x0049ca    program     static _output/main__mios-gpasm-tmp.asm
+               _00219_DS_   0x0049d2    program     static _output/main__mios-gpasm-tmp.asm
+               _00280_DS_   0x0049de    program     static _output/main__mios-gpasm-tmp.asm
+               _00281_DS_   0x0049e0    program     static _output/main__mios-gpasm-tmp.asm
+               _00223_DS_   0x0049f4    program     static _output/main__mios-gpasm-tmp.asm
+               _00285_DS_   0x0049fe    program     static _output/main__mios-gpasm-tmp.asm
+               _00229_DS_   0x004a0c    program     static _output/main__mios-gpasm-tmp.asm
+               _00230_DS_   0x004a24    program     static _output/main__mios-gpasm-tmp.asm
+              _170567_DS_   0x004a2c    program     static _output/main__mios-gpasm-tmp.asm
+              _180568_DS_   0x004a5c    program     static _output/main__mios-gpasm-tmp.asm
+              _190569_DS_   0x004a6c    program     static _output/main__mios-gpasm-tmp.asm
+               _00232_DS_   0x004a72    program     static _output/main__mios-gpasm-tmp.asm
+               _00234_DS_   0x004abc    program     static _output/main__mios-gpasm-tmp.asm
+               _00287_DS_   0x004ac8    program     static _output/main__mios-gpasm-tmp.asm
+               _00236_DS_   0x004ae2    program     static _output/main__mios-gpasm-tmp.asm
+               _00239_DS_   0x004aea    program     static _output/main__mios-gpasm-tmp.asm
+               _00242_DS_   0x004af2    program     static _output/main__mios-gpasm-tmp.asm
+               _00244_DS_   0x004af8    program     static _output/main__mios-gpasm-tmp.asm
+               _00289_DS_   0x004b04    program     static _output/main__mios-gpasm-tmp.asm
+               _00290_DS_   0x004b06    program     static _output/main__mios-gpasm-tmp.asm
+               _00248_DS_   0x004b0a    program     static _output/main__mios-gpasm-tmp.asm
+     _MPROC_NotifyTimeout   0x005cfe    program     extern _output/main__mios-gpasm-tmp.asm
+  _MPROC_NotifyFoundEvent   0x005c54    program     extern _output/main__mios-gpasm-tmp.asm
+_MPROC_NotifyReceivedEvnt   0x004690    program     extern _output/main__mios-gpasm-tmp.asm
+               _00190_DS_   0x0046f8    program     static _output/main__mios-gpasm-tmp.asm
+               _00191_DS_   0x00471e    program     static _output/main__mios-gpasm-tmp.asm
+               _00192_DS_   0x004758    program     static _output/main__mios-gpasm-tmp.asm
+               _00135_DS_   0x004788    program     static _output/main__mios-gpasm-tmp.asm
+               _00142_DS_   0x0047bc    program     static _output/main__mios-gpasm-tmp.asm
+               _00143_DS_   0x0047bc    program     static _output/main__mios-gpasm-tmp.asm
+               _00144_DS_   0x0047f0    program     static _output/main__mios-gpasm-tmp.asm
+               _00160_DS_   0x00480a    program     static _output/main__mios-gpasm-tmp.asm
+               _00193_DS_   0x004816    program     static _output/main__mios-gpasm-tmp.asm
+               _00194_DS_   0x004826    program     static _output/main__mios-gpasm-tmp.asm
+               _00195_DS_   0x00484c    program     static _output/main__mios-gpasm-tmp.asm
+               _00163_DS_   0x004854    program     static _output/main__mios-gpasm-tmp.asm
+               _00196_DS_   0x004860    program     static _output/main__mios-gpasm-tmp.asm
+               _00197_DS_   0x00487a    program     static _output/main__mios-gpasm-tmp.asm
+               _00198_DS_   0x00487c    program     static _output/main__mios-gpasm-tmp.asm
+               _00169_DS_   0x004882    program     static _output/main__mios-gpasm-tmp.asm
+               _00170_DS_   0x004884    program     static _output/main__mios-gpasm-tmp.asm
+               _00199_DS_   0x0048b4    program     static _output/main__mios-gpasm-tmp.asm
+               _00200_DS_   0x0048b6    program     static _output/main__mios-gpasm-tmp.asm
+               _00171_DS_   0x0048bc    program     static _output/main__mios-gpasm-tmp.asm
+               _00172_DS_   0x0048be    program     static _output/main__mios-gpasm-tmp.asm
+               _00148_DS_   0x0048d2    program     static _output/main__mios-gpasm-tmp.asm
+               _00201_DS_   0x0048de    program     static _output/main__mios-gpasm-tmp.asm
+               _00202_DS_   0x0048ec    program     static _output/main__mios-gpasm-tmp.asm
+               _00151_DS_   0x004910    program     static _output/main__mios-gpasm-tmp.asm
+               _00203_DS_   0x00491c    program     static _output/main__mios-gpasm-tmp.asm
+               _00204_DS_   0x00492a    program     static _output/main__mios-gpasm-tmp.asm
+               _00167_DS_   0x00494a    program     static _output/main__mios-gpasm-tmp.asm
+            _DISPLAY_Tick   0x0057ee    program     extern _output/main__mios-gpasm-tmp.asm
+               _00122_DS_   0x0057fa    program     static _output/main__mios-gpasm-tmp.asm
+               _00125_DS_   0x00584c    program     static _output/main__mios-gpasm-tmp.asm
+               _00126_DS_   0x005850    program     static _output/main__mios-gpasm-tmp.asm
+               _00127_DS_   0x00587c    program     static _output/main__mios-gpasm-tmp.asm
+               _00128_DS_   0x005880    program     static _output/main__mios-gpasm-tmp.asm
+               _00123_DS_   0x005886    program     static _output/main__mios-gpasm-tmp.asm
+            _DISPLAY_Init   0x005a84    program     extern _output/main__mios-gpasm-tmp.asm
+                   _Timer   0x005d00    program     extern _output/main__mios-gpasm-tmp.asm
+                    _Tick   0x005d02    program     extern _output/main__mios-gpasm-tmp.asm
+                    _Init   0x005994    program     extern _output/main__mios-gpasm-tmp.asm
+           _pot_event_map   0x004ee6    program     extern _output/main__mios-gpasm-tmp.asm
+        _button_event_map   0x004f66    program     extern _output/main__mios-gpasm-tmp.asm
+                  __str_0   0x004fe6    program     static _output/main__mios-gpasm-tmp.asm
+                  __str_1   0x004ff8    program     static _output/main__mios-gpasm-tmp.asm
+                    r0x00   0x000010       data     static _output/int/divsint__mios-gpasm-tmp.asm
+                    r0x01   0x000011       data     static _output/int/divsint__mios-gpasm-tmp.asm
+                    r0x02   0x000012       data     static _output/int/divsint__mios-gpasm-tmp.asm
+                    r0x03   0x000013       data     static _output/int/divsint__mios-gpasm-tmp.asm
+                    r0x04   0x000014       data     static _output/int/divsint__mios-gpasm-tmp.asm
+                    r0x05   0x000015       data     static _output/int/divsint__mios-gpasm-tmp.asm
+                    r0x06   0x000016       data     static _output/int/divsint__mios-gpasm-tmp.asm
+                    r0x07   0x000017       data     static _output/int/divsint__mios-gpasm-tmp.asm
+                __divsint   0x00533e    program     extern _output/int/divsint__mios-gpasm-tmp.asm
+               _00110_DS_   0x00539a    program     static _output/int/divsint__mios-gpasm-tmp.asm
+               _00111_DS_   0x0053a2    program     static _output/int/divsint__mios-gpasm-tmp.asm
+               _00112_DS_   0x0053c6    program     static _output/int/divsint__mios-gpasm-tmp.asm
+               _00113_DS_   0x0053ce    program     static _output/int/divsint__mios-gpasm-tmp.asm
+               _00106_DS_   0x005408    program     static _output/int/divsint__mios-gpasm-tmp.asm
+               _00108_DS_   0x00540e    program     static _output/int/divsint__mios-gpasm-tmp.asm
+                    r0x00   0x000010       data     static _output/int/mulint__mios-gpasm-tmp.asm
+                    r0x01   0x000011       data     static _output/int/mulint__mios-gpasm-tmp.asm
+                    r0x02   0x000012       data     static _output/int/mulint__mios-gpasm-tmp.asm
+                    r0x03   0x000013       data     static _output/int/mulint__mios-gpasm-tmp.asm
+           __mulint_x_1_1   0x00011c       data     static _output/int/mulint__mios-gpasm-tmp.asm
+           __mulint_y_1_1   0x00011e       data     static _output/int/mulint__mios-gpasm-tmp.asm
+           __mulint_t_1_1   0x000120       data     static _output/int/mulint__mios-gpasm-tmp.asm
+                 __mulint   0x00574e    program     extern _output/int/mulint__mios-gpasm-tmp.asm
+                    r0x00   0x000010       data     static _output/int/moduint__mios-gpasm-tmp.asm
+                    r0x01   0x000011       data     static _output/int/moduint__mios-gpasm-tmp.asm
+                    r0x02   0x000012       data     static _output/int/moduint__mios-gpasm-tmp.asm
+                    r0x03   0x000013       data     static _output/int/moduint__mios-gpasm-tmp.asm
+                    r0x04   0x000014       data     static _output/int/moduint__mios-gpasm-tmp.asm
+                    r0x05   0x000015       data     static _output/int/moduint__mios-gpasm-tmp.asm
+                    r0x06   0x000016       data     static _output/int/moduint__mios-gpasm-tmp.asm
+                    r0x07   0x000017       data     static _output/int/moduint__mios-gpasm-tmp.asm
+                __moduint   0x00551e    program     extern _output/int/moduint__mios-gpasm-tmp.asm
+               _00107_DS_   0x005562    program     static _output/int/moduint__mios-gpasm-tmp.asm
+               _00125_DS_   0x00557e    program     static _output/int/moduint__mios-gpasm-tmp.asm
+               _00106_DS_   0x005588    program     static _output/int/moduint__mios-gpasm-tmp.asm
+               _00112_DS_   0x005590    program     static _output/int/moduint__mios-gpasm-tmp.asm
+               _00126_DS_   0x00559a    program     static _output/int/moduint__mios-gpasm-tmp.asm
+               _00111_DS_   0x0055a4    program     static _output/int/moduint__mios-gpasm-tmp.asm
+                    r0x00   0x000010       data     static _output/int/divuint__mios-gpasm-tmp.asm
+                    r0x01   0x000011       data     static _output/int/divuint__mios-gpasm-tmp.asm
+                    r0x02   0x000012       data     static _output/int/divuint__mios-gpasm-tmp.asm
+                    r0x03   0x000013       data     static _output/int/divuint__mios-gpasm-tmp.asm
+                    r0x04   0x000014       data     static _output/int/divuint__mios-gpasm-tmp.asm
+                    r0x05   0x000015       data     static _output/int/divuint__mios-gpasm-tmp.asm
+                    r0x06   0x000016       data     static _output/int/divuint__mios-gpasm-tmp.asm
+                    r0x07   0x000017       data     static _output/int/divuint__mios-gpasm-tmp.asm
+                    r0x08   0x000018       data     static _output/int/divuint__mios-gpasm-tmp.asm
+                __divuint   0x005698    program     extern _output/int/divuint__mios-gpasm-tmp.asm
+               _00109_DS_   0x0056e4    program     static _output/int/divuint__mios-gpasm-tmp.asm
+               _00106_DS_   0x005704    program     static _output/int/divuint__mios-gpasm-tmp.asm
+               _00121_DS_   0x00570e    program     static _output/int/divuint__mios-gpasm-tmp.asm
+               _00110_DS_   0x00571a    program     static _output/int/divuint__mios-gpasm-tmp.asm
+                   _cinit   0x005c62    program     extern  
+ 
