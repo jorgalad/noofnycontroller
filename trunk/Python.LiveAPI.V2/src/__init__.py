@@ -2,7 +2,7 @@ import sys, os
 from NoofnyController import NoofnyController
 
 # Some Python path crap - don't think I need this anymore. Leaving for now.
-pythonInstallDir = 'C:\\Python22'
+pythonInstallDir = 'C:\\Python25'
 if pythonInstallDir not in sys.path:
     sys.path.append(pythonInstallDir)
     

@@ -673,21 +673,31 @@ class NoofnyController:
                 # MISC - Y (these are handled internally depending on the changel / instrument)
                 elif (controllerIndex == self._CC_CHANNEL_Y):
                     if (channelIndex >= 0 and channelIndex <= 3):
+                        stuff1 = self._CLIP_LENGTHS["000"]
+                        #thisClipShit = self.song().tracks[0].clip_slots[0].clip
+                        self.logger.log("---------------->  nem stuff=" + str(stuff1))
+                        self.logger.log("---------------->  nem thisClipShit A =" + str(self.song().tracks[0].clip_slots[0]))
+                        self.logger.log("---------------->  nem thisClipShit B =" + str(hash(self.song().tracks[0].clip_slots[0])))
+                        self.logger.log("---------------->  nem thisClipShit C =" + str(id(self.song().tracks[0].clip_slots[0])))
+                        #self.logger.log("---------------->  nem thisClipShit D =" + pickle.dumps(self.song().tracks[0].clip_slots[0]))
+                        
+                         
 #                        clip = self.song().tracks[4].clip_slots[0].clip
 #                        endValueRaw = (float(potValue) / float(127)) * 16
 #                        endValue = round(endValueRaw, 1)
 #                        clip.loop_end  = endValue
-                        playingClips = self.GetPlayingClipsForChannel(channelIndex)
-                        if (playingClips != None):
-                            #self.logger.log("---------------->  playingClips=" + str(playingClips))
-                            for playingClip in playingClips:
-                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name))
-                                shit = self._CLIP_LENGTHS[str(id(playingClip))]
-                                #self.logger.log("---------------->  playingClip")
-                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name))
-                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " self._CLIP_LENGTHS=" + str(len(self._CLIP_LENGTHS)))
-                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " self._CLIP_LENGTHS=" + str(len(self._CLIP_LENGTHS)))
-                                self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " shit=" + str(shit))
+
+#                        playingClips = self.GetPlayingClipsForChannel(channelIndex)
+#                        if (playingClips != None):
+#                            #self.logger.log("---------------->  playingClips=" + str(playingClips))
+#                            for playingClip in playingClips:
+#                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name))
+#                                shit = self._CLIP_LENGTHS[str(id(playingClip))]
+#                                #self.logger.log("---------------->  playingClip")
+#                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name))
+#                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " self._CLIP_LENGTHS=" + str(len(self._CLIP_LENGTHS)))
+#                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " self._CLIP_LENGTHS=" + str(len(self._CLIP_LENGTHS)))
+#                                self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " shit=" + str(shit))
                             
                 # MESC - X (these are handled internally depending on the changel / instrument)
                 elif (controllerIndex == self._CC_CHANNEL_X):
@@ -1341,7 +1351,8 @@ class NoofnyController:
 
     def GatherClipLengths(self):
         try:
-            self._CLIP_LENGTHS = [[0,0]]
+            #self._CLIP_LENGTHS = [[0,0]]
+            self._CLIP_LENGTHS = {"000":-1}
             for track in self.song().tracks:
                 if (track.has_midi_input):
                     continue
@@ -1355,7 +1366,8 @@ class NoofnyController:
                         #self.logger.log("------------------> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name) + " looping=" + str(clipSlot.clip.looping)) 
                         isLooping = clipSlot.clip.looping
                         clipSlot.clip.looping = False
-                        self._CLIP_LENGTHS.append( [str(id(clipSlot.clip)), clipSlot.clip.length] )
+                        self._CLIP_LENGTHS[str(id(clipSlot.clip))] = clipSlot.clip.length
+                        #self._CLIP_LENGTHS.append( [str(id(clipSlot.clip)), clipSlot.clip.length] )
                         clipSlot.clip.looping = isLooping
                     except:
                         self.logger.log("    ERROR >>> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name)) 
