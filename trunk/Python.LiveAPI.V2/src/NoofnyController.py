@@ -543,6 +543,7 @@ class NoofnyController:
         try:
                     
             self._appInstance.show_message(">>> build_midi_map # " + str(self._BUILD_MIDIMAP_COUNT))
+            self.PopulateClipNames()
             self.GatherClipLengths()
             map_mode = Live.MidiMap.MapMode.absolute
             for channel in range(0,16):
@@ -674,27 +675,12 @@ class NoofnyController:
                 elif (controllerIndex == self._CC_CHANNEL_Y):
                     if (channelIndex >= 0 and channelIndex <= 3):
                         myExampleClip = self.song().tracks[0].clip_slots[0].clip
-                        hashName = hash(str(myExampleClip.name))
-                        hashColor = hash(str(myExampleClip.color_index))
-                        hashLength = hash(str(myExampleClip.length))
-                        clipId = hashName + hashColor + hashLength
-                        self.logger.log("---->   clipId = " + str(clipId))
-                        shit = self._CLIP_LENGTHS[str(clipId)]
-                        self.logger.log("---->   shit = " + str(shit))
-                        
-#                        self.logger.log("---->   id 1 = " + str(id(myExampleClip)))
-#                        self.logger.log("---->   id 2 = " + str(id(myExampleClip)))
-#                        self.logger.log("---->   id 3 = " + str(id(myExampleClip)))
-#                        self.logger.log("---->   hash 1 = " + str(shiteC))
-#                        self.logger.log("---->   hash 2 = " + str(shiteC))
-#                        self.logger.log("---->   hash 3 = " + str(shiteC))
-                        
-                         
+                        shit = self._CLIP_LENGTHS[str(myExampleClip.name)]
+                        self.logger.log("---->  beeeeeeep    shit = " + str(shit))
 #                        clip = self.song().tracks[4].clip_slots[0].clip
 #                        endValueRaw = (float(potValue) / float(127)) * 16
 #                        endValue = round(endValueRaw, 1)
 #                        clip.loop_end  = endValue
-
 #                        playingClips = self.GetPlayingClipsForChannel(channelIndex)
 #                        if (playingClips != None):
 #                            #self.logger.log("---------------->  playingClips=" + str(playingClips))
@@ -1373,11 +1359,7 @@ class NoofnyController:
                         #self.logger.log("------------------> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name) + " looping=" + str(clipSlot.clip.looping)) 
                         isLooping = clipSlot.clip.looping
                         clipSlot.clip.looping = False
-                        hashClipName = hash(str(clipSlot.clip.name))
-                        hashColorIndex = hash(str(clipSlot.clip.color_index))
-                        hashLength = hash(str(clipSlot.clip.length))
-                        clipId = hashClipName + hashColorIndex + hashLength
-                        self._CLIP_LENGTHS[str(clipId)] = clipSlot.clip.length
+                        self._CLIP_LENGTHS[str(clipSlot.clip.name)] = clipSlot.clip.length
                         clipSlot.clip.looping = isLooping
                     except:
                         self.logger.log("    ERROR >>> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name)) 
@@ -1385,6 +1367,27 @@ class NoofnyController:
             self.logger.log("    ERROR >>> GatherClipLengths")
 
 
+    def PopulateClipNames(self):
+        try:
+            trackIndex = -1
+            for track in self.song().tracks:
+                trackIndex += 1
+                clipIndex = -1
+                channelIndex = self.GetTrackChannel(track)
+                if (channelIndex == None):
+                     continue    # so we skip non-clip channel tracks
+                for clipSlot in track.clip_slots:
+                    clipIndex += 1
+                    if not (clipSlot.has_clip):
+                        continue
+                    try:
+                        clipTrackIndex = clipIndex / self._SCENES_PER_SONG
+                        clipSongIndex = clipIndex % self._SCENES_PER_SONG
+                        clipSlot.clip.name = (str(trackIndex) + "_" + str(clipTrackIndex) + "_" +  str(clipSongIndex) + "_" + str(clipIndex))  
+                    except:
+                        self.logger.log("    ERROR >>> PopulateEmptyClipNames track=" + str(track.name) + " clip=" + str(clipSlot.clip.name)) 
+        except:
+            self.logger.log("    ERROR >>> PopulateEmptyClipNames")
 
 
 
