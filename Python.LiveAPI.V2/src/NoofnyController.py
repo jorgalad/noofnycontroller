@@ -87,6 +87,8 @@ class NoofnyController:
     _BUILD_MIDIMAP_COUNT        = 0
     _DISCONNECTED               = 0
 
+    _CLIP_LOOP_STARTS = [[0,0]]
+    _CLIP_LOOP_ENDS = [[0,0]]
     _CLIP_LENGTHS = [[0,0]]
 
 
@@ -671,35 +673,36 @@ class NoofnyController:
                 elif (controllerIndex == self._CC_CHANNEL_CHOP_AMMOUNT):
                     groupTrack.devices[0].parameters[7].value = potValue
 
-                # MISC - Y (these are handled internally depending on the changel / instrument)
+                # MISC - Y (these are handled internally depending on the channel / instrument)
                 elif (controllerIndex == self._CC_CHANNEL_Y):
-                    if (channelIndex >= 0 and channelIndex <= 3):
-                        myExampleClip = self.song().tracks[0].clip_slots[0].clip
-                        shit = self._CLIP_LENGTHS[str(myExampleClip.name)]
-                        self.logger.log("---->  beeeeeeep    shit = " + str(shit))
-#                        clip = self.song().tracks[4].clip_slots[0].clip
-#                        endValueRaw = (float(potValue) / float(127)) * 16
-#                        endValue = round(endValueRaw, 1)
-#                        clip.loop_end  = endValue
-#                        playingClips = self.GetPlayingClipsForChannel(channelIndex)
-#                        if (playingClips != None):
-#                            #self.logger.log("---------------->  playingClips=" + str(playingClips))
-#                            for playingClip in playingClips:
-#                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name))
-#                                shit = self._CLIP_LENGTHS[str(id(playingClip))]
-#                                #self.logger.log("---------------->  playingClip")
-#                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name))
-#                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " self._CLIP_LENGTHS=" + str(len(self._CLIP_LENGTHS)))
-#                                #self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " self._CLIP_LENGTHS=" + str(len(self._CLIP_LENGTHS)))
-#                                self.logger.log("---------------->  playingClip=" + str(playingClip.name) + " shit=" + str(shit))
+                    #if (channelIndex >= 0 and channelIndex <= 3):
+                    playingClips = self.GetPlayingClipsForChannel(channelIndex)
+                    if (playingClips != None):
+                        for playingClip in playingClips:
+                            origLength = self._CLIP_LENGTHS[str(playingClip.name)]
+                            newLength = round(float(potValue) / float(127) * origLength, 0)
+                            if (potValue > 120):
+                                playingClip.loop_end = origLength
+                            else:
+                                #if (newLength % 2 == 0):
+                                playingClip.loop_end = newLength
+                            #self.logger.log("---->  beeeeeeep    origLength = " + str(origLength))
                             
-                # MESC - X (these are handled internally depending on the changel / instrument)
+                # MISC - X (these are handled internally depending on the channel / instrument)
                 elif (controllerIndex == self._CC_CHANNEL_X):
-                    if (channelIndex >= 0 and channelIndex <= 3):
-                        clip = self.song().tracks[4].clip_slots[0].clip
-                        startValueRaw = (float(potValue) / float(127)) * 16
-                        startValue = round(startValueRaw, 1)
-                        clip.loop_start = startValueRaw
+                    #if (channelIndex >= 0 and channelIndex <= 3):
+                    playingClips = self.GetPlayingClipsForChannel(channelIndex)
+                    if (playingClips != None):
+                        for playingClip in playingClips:
+                            origLength = self._CLIP_LENGTHS[str(playingClip.name)]
+                            origStart = self._CLIP_LOOP_STARTS[str(playingClip.name)]
+                            newStart = round(float(potValue) / float(127) * origLength, 0)
+                            if (potValue < 10):
+                                playingClip.loop_start = origStart
+                            else:
+                                #if (newStart % 2 == 0):
+                                playingClip.loop_start = newStart
+                            #self.logger.log("---->  beeeeeeep    origLength = " + str(origLength))
 
 
                 # SEND A
@@ -832,19 +835,30 @@ class NoofnyController:
                         self._FX_STATES[channelIndex] = 1
                         groupTrack.clip_slots[2].fire()
 
-#                # LOOP I/O
-#                elif (buttonIndex == 0):
-#                    None
-#
-                # LFO 0/1/2
-                elif (buttonIndex == 1):    
+                # AMP - LFO I/O
+                elif (buttonIndex == 0):    
                     currentLfoValue = groupTrack.devices[0].parameters[8].value;
-                    if (currentLfoValue == 0 and currentLfoValue < 42):
-                        groupTrack.devices[0].parameters[8].value = 42
-                    elif (currentLfoValue >= 42 and currentLfoValue < 85):
-                        groupTrack.devices[0].parameters[8].value = 85
+                    if (currentLfoValue == 0):
+                        groupTrack.devices[0].parameters[8].value = 3
+                    elif (currentLfoValue == 1):
+                        groupTrack.devices[0].parameters[8].value = 2
+                    elif (currentLfoValue == 2):
+                        groupTrack.devices[0].parameters[8].value = 1
                     else:
                         groupTrack.devices[0].parameters[8].value = 0
+                    self.DisplayChannelButtonsForChannel(channelIndex)
+
+                # FIL - LFO I/O
+                elif (buttonIndex == 1):    
+                    currentLfoValue = groupTrack.devices[0].parameters[8].value;
+                    if (currentLfoValue == 0):
+                        groupTrack.devices[0].parameters[8].value = 1
+                    elif (currentLfoValue == 1):
+                        groupTrack.devices[0].parameters[8].value = 0
+                    elif (currentLfoValue == 2):
+                        groupTrack.devices[0].parameters[8].value = 1
+                    else:
+                        groupTrack.devices[0].parameters[8].value = 2
                     self.DisplayChannelButtonsForChannel(channelIndex)
 
                 # EQ I/O
@@ -1141,12 +1155,18 @@ class NoofnyController:
                     self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 11, self._LED_OFF))
 
             currentLfoValue = groupTrack.devices[0].parameters[8].value;
-            if (currentLfoValue == 0 and currentLfoValue < 42):
+            if (currentLfoValue == 0):
                 self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 1, self._LED_OFF))
-            elif (currentLfoValue >= 42 and currentLfoValue < 85):
-                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 1, self._LED_BLUE))
-            else:
+                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 2, self._LED_OFF))
+            elif (currentLfoValue == 1):
                 self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 1, self._LED_CYAN))
+                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 2, self._LED_OFF))
+            elif (currentLfoValue == 2):
+                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 1, self._LED_CYAN))
+                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 2, self._LED_CYAN))
+            else:
+                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 1, self._LED_OFF))
+                self.send_midi((self._NOTE_ON_EVENT + channelIndex, self._NOTE_SEND_OFFSET + 2, self._LED_CYAN))
 
         except:
             self.logger.log("    ERROR >>> DisplayChannelButtonsForChannel ERROR!!! channelIndex=" + str(channelIndex))
@@ -1345,6 +1365,8 @@ class NoofnyController:
 
     def GatherClipLengths(self):
         try:
+            self._CLIP_LOOP_STARTS = {"0":-1}
+            self._CLIP_LOOP_ENDS = {"0":-1}
             self._CLIP_LENGTHS = {"0":-1}
             for track in self.song().tracks:
                 if (track.has_midi_input):
@@ -1357,6 +1379,8 @@ class NoofnyController:
                         continue
                     try:
                         #self.logger.log("------------------> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name) + " looping=" + str(clipSlot.clip.looping)) 
+                        self._CLIP_LOOP_STARTS[str(clipSlot.clip.name)] = clipSlot.clip.loop_start
+                        self._CLIP_LOOP_ENDS[str(clipSlot.clip.name)] = clipSlot.clip.loop_end
                         isLooping = clipSlot.clip.looping
                         clipSlot.clip.looping = False
                         self._CLIP_LENGTHS[str(clipSlot.clip.name)] = clipSlot.clip.length
