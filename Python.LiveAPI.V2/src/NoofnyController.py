@@ -90,6 +90,7 @@ class NoofnyController:
     _CLIP_LOOP_STARTS = [[0,0]]
     _CLIP_LOOP_ENDS = [[0,0]]
     _CLIP_LENGTHS = [[0,0]]
+    _CLIP_LOOP_ON = [[0,0]]
 
 
 
@@ -103,26 +104,27 @@ class NoofnyController:
         self._appInstance = appInstance
         self._appInstance.show_message("************ NoofnyController | CONNECTING ************")
         self.AddListeners()
-        if (self._LOG_CONNECT_EVENTS):
-            self.logger.log(">>> NoofnyController > INIT OK")
         self.GetEffectChannelClipCounts()
-        self._appInstance.show_message("NoofnyController > INIT OK")
+        if (self._LOG_CONNECT_EVENTS):
+            self.logger.log(">>> NoofnyController > CONNECTED")
+        self._appInstance.show_message("NoofnyController > CONNECTED")
 
 
 
     # Called when the class instance is disposed by Live.
     def disconnect(self):
-        if (self._LOG_DISCONNECT_EVENTS):
-            self.logger.log("************ NoofnyController | DISCONNECTED ************")
+        self.ResetClipLengths()
         self.RemoveListeners()
         self.send_midi(self._SYSEX_MESSAGE_DISCONNECT)
         self._DISCONNECTED = 1;
+        if (self._LOG_DISCONNECT_EVENTS):
+            self.logger.log("************ NoofnyController | DISCONNECTED ************")
 
         
 
          
          
-         
+   
          
          
          
@@ -856,7 +858,7 @@ class NoofnyController:
                     elif (currentLfoValue == 1):
                         groupTrack.devices[0].parameters[8].value = 0
                     elif (currentLfoValue == 2):
-                        groupTrack.devices[0].parameters[8].value = 1
+                        groupTrack.devices[0].parameters[8].value = 3
                     else:
                         groupTrack.devices[0].parameters[8].value = 2
                     self.DisplayChannelButtonsForChannel(channelIndex)
@@ -1365,9 +1367,10 @@ class NoofnyController:
 
     def GatherClipLengths(self):
         try:
-            self._CLIP_LOOP_STARTS = {"0":-1}
-            self._CLIP_LOOP_ENDS = {"0":-1}
-            self._CLIP_LENGTHS = {"0":-1}
+            self._CLIP_LOOP_STARTS = {"-1":0}
+            self._CLIP_LOOP_ENDS = {"-1":0}
+            self._CLIP_LENGTHS = {"-1":0}
+            self._CLIP_LOOP_ON = {"-1":0}
             for track in self.song().tracks:
                 if (track.has_midi_input):
                     continue
@@ -1381,10 +1384,10 @@ class NoofnyController:
                         #self.logger.log("------------------> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name) + " looping=" + str(clipSlot.clip.looping)) 
                         self._CLIP_LOOP_STARTS[str(clipSlot.clip.name)] = clipSlot.clip.loop_start
                         self._CLIP_LOOP_ENDS[str(clipSlot.clip.name)] = clipSlot.clip.loop_end
-                        isLooping = clipSlot.clip.looping
+                        self._CLIP_LOOP_ON[str(clipSlot.clip.name)] = clipSlot.clip.looping
                         clipSlot.clip.looping = False
                         self._CLIP_LENGTHS[str(clipSlot.clip.name)] = clipSlot.clip.length
-                        clipSlot.clip.looping = isLooping
+                        clipSlot.clip.looping = self._CLIP_LOOP_ON[str(clipSlot.clip.name)]
                     except:
                         self.logger.log("    ERROR >>> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name)) 
         except:
@@ -1409,9 +1412,33 @@ class NoofnyController:
                         clipSongIndex = clipIndex % self._SCENES_PER_SONG
                         clipSlot.clip.name = (str(trackIndex) + "_" + str(clipTrackIndex) + "_" +  str(clipSongIndex) + "_" + str(clipIndex))  
                     except:
-                        self.logger.log("    ERROR >>> PopulateEmptyClipNames track=" + str(track.name) + " clip=" + str(clipSlot.clip.name)) 
+                        self.logger.log("    ERROR >>> PopulateClipNames track=" + str(track.name) + " clip=" + str(clipSlot.clip.name)) 
         except:
-            self.logger.log("    ERROR >>> PopulateEmptyClipNames")
+            self.logger.log("    ERROR >>> PopulateClipNames")
+
+
+
+    def ResetClipLengths(self):
+        try:
+            for track in self.song().tracks:
+                try:
+                    channel = self.GetTrackChannel(track)
+                    if (channel == None):
+                        continue    # so we only do main clip tracks
+                    #self.logger.log("    ------------> ResetClipLengths track=" + str(track.name)) 
+                    for clipSlot in track.clip_slots:
+                        if not (clipSlot.has_clip):
+                            continue
+                            #self.logger.log("------------------> GatherClipLengths track=" + str(track.name) + " clip=" + str(clipSlot.clip.name) + " looping=" + str(clipSlot.clip.looping)) 
+                            clipSlot.clip.loop_start = self._CLIP_LOOP_STARTS[str(clipSlot.clip.name)]  
+                            clipSlot.clip.loop_end = self._CLIP_LOOP_ENDS[str(clipSlot.clip.name)] 
+                            clipSlot.clip.length = self._CLIP_LENGTHS[str(clipSlot.clip.name)] 
+                            clipSlot.clip.looping = self._CLIP_LOOP_ON[str(clipSlot.clip.name)]
+                except:
+                    self.logger.log("    ERROR >>> ResetClipLengths track=" + str(track.name)) # + " clip=" + str(clipSlot.clip.name)) 
+        except:
+            self.logger.log("    ERROR >>> ResetClipLengths") 
+
 
 
 
@@ -1553,7 +1580,8 @@ class NoofnyController:
                 return None     # so we skip fx tracks which have a '~' at the end of their track name
             if (str(track.name).find("_") < 1):
                 return None     # so we skip audio tracks which dont have a '_' in their track name (like ad-hoc audio tracks)
-            return int(track.current_output_routing.split('-')[1])-1
+            #return int(track.current_output_routing.split('-')[1])-1
+            return int(track.current_output_routing.replace('~', ""))-1
         except:
             self.logger.log("    ERROR >>> GetTrackChannel > track=" + str(track.Name))
             return None
@@ -1619,16 +1647,17 @@ class NoofnyController:
                 if (trackChannel != channelIndex):
                     continue    # so we only look at tracks that are routed to the given channel
                 clipSlot = track.clip_slots[clipIndex]
-                if (clipSlot.has_clip):
-                    if (clipSlot.clip.is_triggered):
-                        return self._CLIP_STATUS_TRIGGERED
-                    elif (clipSlot.clip.is_playing):
-                        if (track.arm):
-                            return self._CLIP_STATUS_ARMED
+                if (clipSlot != None):
+                    if (clipSlot.has_clip):
+                        if (clipSlot.clip.is_triggered):
+                            return self._CLIP_STATUS_TRIGGERED
+                        elif (clipSlot.clip.is_playing):
+                            if (track.arm):
+                                return self._CLIP_STATUS_ARMED
+                            else:
+                                return self._CLIP_STATUS_PLAYING
                         else:
-                            return self._CLIP_STATUS_PLAYING
-                    else:
-                        return self._CLIP_STATUS_PRESENT
+                            return self._CLIP_STATUS_PRESENT
             return self._CLIP_STATUS_NONE
         except:
             self.logger.log("    ERROR >>> GetChannelClipStatus > channelIndex=" + str(channelIndex) + " clipIndex=" + str(clipIndex))
