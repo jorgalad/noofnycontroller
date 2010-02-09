@@ -79,6 +79,7 @@ class NoofnyController:
     _LAST_TRIGGERED_CLIPS       = [0,0,0,0,0,0,0,0]
     _EQ_STATES                  = [0,0,0,0,0,0,0,0]
     _FX_STATES                  = [0,0,0,0,0,0,0,0]
+    _LOOP_STATES                = [0,0,0,0,0,0,0,0]
     _MASTER_FX_STATE            = 0
     _CLIP_COUNT_FX_A            = 0
     _CLIP_COUNT_FX_B            = 0
@@ -677,34 +678,36 @@ class NoofnyController:
 
                 # MISC - Y (these are handled internally depending on the channel / instrument)
                 elif (controllerIndex == self._CC_CHANNEL_Y):
+                    if (self._LOOP_STATES[channelIndex] == 1):
                     #if (channelIndex >= 0 and channelIndex <= 3):
-                    playingClips = self.GetPlayingClipsForChannel(channelIndex)
-                    if (playingClips != None):
-                        for playingClip in playingClips:
-                            origLength = self._CLIP_LENGTHS[str(playingClip.name)]
-                            newLength = round(float(potValue) / float(127) * origLength, 0)
-                            if (potValue > 120):
-                                playingClip.loop_end = origLength
-                            else:
-                                #if (newLength % 2 == 0):
-                                playingClip.loop_end = newLength
-                            #self.logger.log("---->  beeeeeeep    origLength = " + str(origLength))
+                        playingClips = self.GetPlayingClipsForChannel(channelIndex)
+                        if (playingClips != None):
+                            for playingClip in playingClips:
+                                origLength = self._CLIP_LENGTHS[str(playingClip.name)]
+                                newLength = round(float(potValue) / float(127) * origLength, 0)
+                                if (potValue > 120):
+                                    playingClip.loop_end = origLength
+                                else:
+                                    #if (newLength % 2 == 0):
+                                    playingClip.loop_end = newLength
+                                #self.logger.log("---->  beeeeeeep    origLength = " + str(origLength))
                             
                 # MISC - X (these are handled internally depending on the channel / instrument)
                 elif (controllerIndex == self._CC_CHANNEL_X):
+                    if (self._LOOP_STATES[channelIndex] == 1):
                     #if (channelIndex >= 0 and channelIndex <= 3):
-                    playingClips = self.GetPlayingClipsForChannel(channelIndex)
-                    if (playingClips != None):
-                        for playingClip in playingClips:
-                            origLength = self._CLIP_LENGTHS[str(playingClip.name)]
-                            origStart = self._CLIP_LOOP_STARTS[str(playingClip.name)]
-                            newStart = round(float(potValue) / float(127) * origLength, 0)
-                            if (potValue < 10):
-                                playingClip.loop_start = origStart
-                            else:
-                                #if (newStart % 2 == 0):
-                                playingClip.loop_start = newStart
-                            #self.logger.log("---->  beeeeeeep    origLength = " + str(origLength))
+                        playingClips = self.GetPlayingClipsForChannel(channelIndex)
+                        if (playingClips != None):
+                            for playingClip in playingClips:
+                                origLength = self._CLIP_LENGTHS[str(playingClip.name)]
+                                origStart = self._CLIP_LOOP_STARTS[str(playingClip.name)]
+                                newStart = round(float(potValue) / float(127) * origLength, 0)
+                                if (potValue < 10):
+                                    playingClip.loop_start = origStart
+                                else:
+                                    #if (newStart % 2 == 0):
+                                    playingClip.loop_start = newStart
+                                #self.logger.log("---->  beeeeeeep    origLength = " + str(origLength))
 
 
                 # SEND A
@@ -902,6 +905,13 @@ class NoofnyController:
                         selectedClipSlot = track.clip_slots[clipSlotIndex]
                         selectedClipSlot.fire()
                     self.DisplaClipsForChannel(channelIndex)
+                elif (clipIndex == 9):     # LOOP I/O
+                    if (self._LOOP_STATES[channelIndex] == 0):
+                        self._LOOP_STATES[channelIndex] = 1
+                        self.send_midi((self._NOTE_ON_EVENT + channelIndex, clipIndex + self._NOTE_SEND_OFFSET, self._LED_YELLOW))
+                    else:
+                        self._LOOP_STATES[channelIndex] = 0
+                        self.send_midi((self._NOTE_ON_EVENT + channelIndex, clipIndex + self._NOTE_SEND_OFFSET, self._LED_OFF))
                 else:
                     if (self._LAST_TRIGGERED_CLIPS[channelIndex] == 1):
                         return
@@ -1197,7 +1207,7 @@ class NoofnyController:
 
     def DisplaClipsForChannel(self, channelIndex):
         try:
-            for buttonIndex in range (0, 7):
+            for buttonIndex in range (0, 6): # clips are buttons 1-6, then loop i/o, then stop
                 clipSlotIndex = buttonIndex + (self._CURRENT_SONG * self._SCENES_PER_SONG)
                 clipStatus = self.GetChannelClipStatus(channelIndex, clipSlotIndex)
                 
